@@ -1,0 +1,8 @@
+---
+- hosts: ubuntu16
+  become: yes
+  tasks:
+  - name: make sure openntpd is installed
+    apt: name=openntpd state=present
+  - name: make sure snmpd is installed
+    apt: name=snmpd state=present

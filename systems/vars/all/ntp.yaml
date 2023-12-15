@@ -1,0 +1,66 @@
+---
+
+ntpdata:
+  fs:
+    is_server: true
+    listen_addr: 192.168.3.1
+    stratum1:
+      - time.cloudflare.com
+    stratum2: false
+    servers:
+      - 0.pool.utoronto.ca
+      - 1.pool.utoronto.ca
+      - 2.pool.utoronto.ca
+  dns1:
+    is_server: true
+    stratum1:
+      - felix.utoronto.ca
+      - ntp.torix.ca
+      - 128.233.154.245
+    stratum2:
+      - tick.utoronto.ca
+    servers:
+      - ca.pool.ntp.org
+  dns4:
+    is_server: true
+    stratum1:
+      - ntp2.torix.ca
+      - tick.usask.ca
+      - navobs1.gatech.edu
+    stratum2:
+        - chime.utoronto.ca
+        - time.cloudflare.com
+        - 128.233.154.245
+    servers:
+      - us.pool.ntp.org
+  dns5:
+    is_server: true
+    stratum1:
+      - bonehed.lcs.mit.edu
+      - time-c.timefreq.bldrdoc.gov
+      - 216.232.132.102
+    stratum2:
+      - tock.utoronto.ca
+      - tick.usask.ca
+      - navobs1.gatech.edu
+    servers:
+  ns2:
+    is_server: true
+    stratum1:
+      - 128.233.154.245
+      - 206.108.0.133
+    stratum2:
+      - dns4.utoronto.ca
+      - dns5.utoronto.ca
+    servers:
+      - mx.pool.ntp.org
+  tyme:
+    is_server: true
+    stratum1:
+      - time-c-b.nist.gov
+      - bonehed.lcs.mit.edu
+      - 162.159.200.1
+      - ntp3.torix.ca
+    stratum2: false
+    servers:
+      - 2.ca.pool.utoronto.ca

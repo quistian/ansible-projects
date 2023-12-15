@@ -1,0 +1,62 @@
+---
+
+#  hosts: ubuntu_ntp_clients
+
+- name: install openntpd and configure for Ubuntu
+  hosts: dollhaus
+  become: yes
+  become_method: sudo
+  tasks:
+
+  - name: make sure openntpd is installed
+    apt:
+      name: openntpd
+      state: present
+
+  - name: write the standard client configuration file
+    template:
+      src: '{{ ansible_distribution }}_ntpd.jinga'
+      dest: /etc/openntpd/ntpd.conf
+      owner: root
+    notify:
+    - restart openntpd
+
+  - name: make sure openntpd is running (and enabled at boot)
+    service:
+      name: openntpd
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: restart openntpd
+      service:
+        name: openntpd
+        state: restarted
+
+- name: Configure OpenBSD ntp clients
+  hosts: openbsd_ntp_clients
+  become: yes
+  become_method: doas
+  tasks:
+
+  - name: write the standard client configuration file
+    template:
+      src: '{{ ansible_distribution }}_ntpd.jinga'
+      dest: /etc/ntpd.conf
+      owner: root
+    notify:
+    - restart ntpd
+
+  - name: make sure openntpd is running (and enabled at boot)
+    service:
+      name: ntpd
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: restart ntpd
+      service:
+        name: ntpd
+        state: restarted
+
+...

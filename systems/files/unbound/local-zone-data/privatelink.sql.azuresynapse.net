@@ -1,0 +1,7 @@
+local-data: "q031_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q031_test.privatelink.sql.azuresynapse.net."
+local-data: "q228_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q228_test.privatelink.sql.azuresynapse.net."
+local-data: "q234_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q234_test.privatelink.sql.azuresynapse.net."
+local-data: "q277_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q277_test.privatelink.sql.azuresynapse.net."
+local-data: "q278_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q278_test.privatelink.sql.azuresynapse.net."
+local-data: "q569_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q569_test.privatelink.sql.azuresynapse.net."
+local-data: "q574_test.NonProd-ondemand.sql.azuresynapse.net. CNAME q574_test.privatelink.sql.azuresynapse.net."

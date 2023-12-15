@@ -1,0 +1,7 @@
+local-data: "q031_test.mariadb.database.azure.com. CNAME q031_test.privatelink.mariadb.database.azure.com."
+local-data: "q228_test.mariadb.database.azure.com. CNAME q228_test.privatelink.mariadb.database.azure.com."
+local-data: "q234_test.mariadb.database.azure.com. CNAME q234_test.privatelink.mariadb.database.azure.com."
+local-data: "q277_test.mariadb.database.azure.com. CNAME q277_test.privatelink.mariadb.database.azure.com."
+local-data: "q278_test.mariadb.database.azure.com. CNAME q278_test.privatelink.mariadb.database.azure.com."
+local-data: "q569_test.mariadb.database.azure.com. CNAME q569_test.privatelink.mariadb.database.azure.com."
+local-data: "q574_test.mariadb.database.azure.com. CNAME q574_test.privatelink.mariadb.database.azure.com."

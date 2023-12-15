@@ -1,0 +1,11 @@
+---
+
+- name: Update and upgrade apt packages
+  hosts: ubuntu20
+  become: true
+  tasks:
+  - name: Let us update only
+    apt:
+      update_cache: yes
+
+...

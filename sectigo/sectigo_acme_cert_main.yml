@@ -1,0 +1,86 @@
+---
+
+- hosts: cert_hosts
+  become: yes
+  vars:
+    select_crypto_backend: "cryptography"
+    root_dir: "/etc/sectigo"
+    data_dir: "{{ root_dir }}/{{ inventory_hostname }}"
+    acme_dir_url: https://acme.sectigo.com/v2/OV
+    account_key_name: eis-net-dev
+    cert_cn: "{{ ansible_facts['fqdn'] }}"
+    contact_email: russell.sutherland@utoronto.ca
+    eab_kid: 0ICUzWHZHb9VwZQ_h6gc6A
+    eab_key: JE4mJ2g3cFV1U2hR3e4Vj_NR-azzJ6CW27bIm7NySeVj9S1uGKARN3VvG44pGZkuhB-THofRe5bVMyQSLCwjiQ
+    eab_alg: HS256
+
+  tasks:
+
+  - name: Make sure crypto packages are installed
+    community.general.openbsd_pkg:
+      name:
+        - py3-cryptography--
+      state: latest
+      become_method: "{{ become_method }}"
+    when: ansible_facts['distribution'] == 'OpenBSD'
+
+  - name: Creates data directory
+    file:
+      path: "{{data_dir}}"
+#      path: "{{ data_dir }}/{{ inventory_hostname }}"
+      state: directory
+      mode: 0755
+    tags: dir
+
+  - name: Generate account keys
+    openssl_privatekey:
+      path: "{{ root_dir }}/{{ account_key_name }}.pem"
+      type: RSA
+      size: 2048
+
+  - name: Parse account keys (to ease debugging some test failures)
+    openssl_privatekey_info:
+      path: "{{ root_dir }}/{{ account_key_name }}.pem"
+      return_private_key_data: true
+
+  - name: Create account with External Account Binding
+    acme_account:
+      select_crypto_backend: "{{ select_crypto_backend }}"
+      account_key_src: "{{ root_dir }}/{{ account_key_name }}.pem"
+      acme_version: 2
+      acme_directory: "{{ acme_dir_url }}"
+      state: present
+      allow_creation: yes
+      terms_agreed: yes
+      contact: "mailto:{{ contact_email }}"
+      external_account_binding:
+        kid: "{{ eab_kid }}"
+        alg: "{{ eab_alg }}"
+        key: "{{ eab_key }}"
+    register: account_created_eab
+  - debug: var=account_created_eab
+  
+  - name: Get certificate from Sectigo CA
+    include_tasks: get-cert.yml
+    vars:
+      certgen_title: "{{ cert_cn }} Certificate"
+      acme_dir: "{{ acme_dir_url }}"
+      certificate_name: "{{ cert_cn }}"
+      key_type: rsa
+      rsa_bits: 2048
+      subject_alt_name: "DNS:www.{{ cert_cn }},DNS:{{ cert_cn }}"
+      subject_alt_name_critical: no
+      account_key: "{{ account_key_name }}"
+      challenge: http-01
+      modify_account: no
+      force: yes
+      remaining_days: 10
+      terms_agreed: yes
+      account_email: "{{ contact_email }}"
+      use_csr_content: false
+
+  - name: Store results for get cert
+    set_fact:
+      cert_result: "{{ get_certificate_result }}"
+#  - debug: var=cert_result
+

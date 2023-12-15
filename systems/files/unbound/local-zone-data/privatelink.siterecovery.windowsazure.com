@@ -1,0 +1,7 @@
+local-data: "q031_test.ca.siterecovery.windowsazure.com. CNAME q031_test.privatelink.siterecovery.windowsazure.com."
+local-data: "q228_test.ca.siterecovery.windowsazure.com. CNAME q228_test.privatelink.siterecovery.windowsazure.com."
+local-data: "q234_test.ca.siterecovery.windowsazure.com. CNAME q234_test.privatelink.siterecovery.windowsazure.com."
+local-data: "q277_test.ca.siterecovery.windowsazure.com. CNAME q277_test.privatelink.siterecovery.windowsazure.com."
+local-data: "q278_test.ca.siterecovery.windowsazure.com. CNAME q278_test.privatelink.siterecovery.windowsazure.com."
+local-data: "q569_test.ca.siterecovery.windowsazure.com. CNAME q569_test.privatelink.siterecovery.windowsazure.com."
+local-data: "q574_test.ca.siterecovery.windowsazure.com. CNAME q574_test.privatelink.siterecovery.windowsazure.com."

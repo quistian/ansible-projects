@@ -1,0 +1,7 @@
+local-data: "q031_test.azure-devices-provisioning.net. CNAME q031_test.privatelink.azure-devices-provisioning.net."
+local-data: "q228_test.azure-devices-provisioning.net. CNAME q228_test.privatelink.azure-devices-provisioning.net."
+local-data: "q234_test.azure-devices-provisioning.net. CNAME q234_test.privatelink.azure-devices-provisioning.net."
+local-data: "q277_test.azure-devices-provisioning.net. CNAME q277_test.privatelink.azure-devices-provisioning.net."
+local-data: "q278_test.azure-devices-provisioning.net. CNAME q278_test.privatelink.azure-devices-provisioning.net."
+local-data: "q569_test.azure-devices-provisioning.net. CNAME q569_test.privatelink.azure-devices-provisioning.net."
+local-data: "q574_test.azure-devices-provisioning.net. CNAME q574_test.privatelink.azure-devices-provisioning.net."

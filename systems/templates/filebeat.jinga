@@ -1,0 +1,81 @@
+{% set fqdn = ansible_facts['fqdn'] %}
+---
+
+shutdown_timeout: '0'
+name: {{ fqdn }}
+tags: []
+fields:
+  agent.criticality: '8'
+  agent.environment: PRD
+  agent.name: {{ fqdn }}
+  agent.org: uoft
+  agent.tenant.id: uoft.govcn.pres.vpore.cio.eis.dns
+fields_under_root: true
+filebeat:
+  config.inputs:
+    enabled: true
+    path: "/etc/filebeat/conf.d/*.yml"
+  config.modules:
+    enabled: true
+    path: "/etc/filebeat/modules.d/*.yml"
+  shutdown_timeout: '0'
+  modules: []
+http:
+  enabled: false
+  port: 5067
+  host: localhost
+output:
+  elasticsearch:
+    enabled: false
+  logstash:
+    enabled: true
+    hosts:
+    - siem-lsc01.ad.utoronto.ca:5000
+    - siem-lsc02.ad.utoronto.ca:5000
+    - siem-lsc03.ad.utoronto.ca:5000
+    - siem-lsc04.ad.utoronto.ca:5000
+    - siem-lsc05.ad.utoronto.ca:5000
+    - siem-lsc06.ad.utoronto.ca:5000
+    - siem-lsc07.ad.utoronto.ca:5000
+    - siem-lsc08.ad.utoronto.ca:5000
+    - siem-lsc09.ad.utoronto.ca:5000
+    - siem-lsc10.ad.utoronto.ca:5000
+    - siem-lsc11.ad.utoronto.ca:5000
+    - siem-lsc12.ad.utoronto.ca:5000
+    - siem-lsc13.ad.utoronto.ca:5000
+    - siem-lsc14.ad.utoronto.ca:5000
+    loadbalance: true
+    worker: 2
+    compression_level: '3'
+    ssl:
+      enabled: true
+      verification_mode: full
+      supported_protocols:
+      - TLSv1.2
+      certificate_authorities:
+      - "/etc/filebeat/uoft-root-ca.crt"
+      - "/etc/filebeat/uoft-device-ca.crt"
+      certificate: "/etc/filebeat/client.pem"
+      key: "/etc/filebeat/client.key"
+shipper: {}
+logging:
+  to_syslog: false
+  to_files: true
+  files:
+    path: /var/log/filebeat
+    name: filebeat
+    keepfiles: 7
+    permissions: 0644
+  selectors:
+  - "*"
+  level: info
+runoptions: {}
+processors:
+  - add_host_metadata:
+      netinfo.enabled: true
+      cache.ttl: 5m
+monitoring:
+  enabled: false
+setup: {}
+xpack:
+  enabled: true

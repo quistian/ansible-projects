@@ -1,0 +1,128 @@
+local-zone: "64.100.in-addr.arpa" redirect
+local-data: "64.100.in-addr.arpa PTR no.internet.access"
+local-zone: "65.100.in-addr.arpa" redirect
+local-data: "65.100.in-addr.arpa PTR no.internet.access"
+local-zone: "66.100.in-addr.arpa" redirect
+local-data: "66.100.in-addr.arpa PTR no.internet.access"
+local-zone: "67.100.in-addr.arpa" redirect
+local-data: "67.100.in-addr.arpa PTR no.internet.access"
+local-zone: "68.100.in-addr.arpa" redirect
+local-data: "68.100.in-addr.arpa PTR no.internet.access"
+local-zone: "69.100.in-addr.arpa" redirect
+local-data: "69.100.in-addr.arpa PTR no.internet.access"
+local-zone: "70.100.in-addr.arpa" redirect
+local-data: "70.100.in-addr.arpa PTR no.internet.access"
+local-zone: "71.100.in-addr.arpa" redirect
+local-data: "71.100.in-addr.arpa PTR no.internet.access"
+local-zone: "72.100.in-addr.arpa" redirect
+local-data: "72.100.in-addr.arpa PTR no.internet.access"
+local-zone: "73.100.in-addr.arpa" redirect
+local-data: "73.100.in-addr.arpa PTR no.internet.access"
+local-zone: "74.100.in-addr.arpa" redirect
+local-data: "74.100.in-addr.arpa PTR no.internet.access"
+local-zone: "75.100.in-addr.arpa" redirect
+local-data: "75.100.in-addr.arpa PTR no.internet.access"
+local-zone: "76.100.in-addr.arpa" redirect
+local-data: "76.100.in-addr.arpa PTR no.internet.access"
+local-zone: "77.100.in-addr.arpa" redirect
+local-data: "77.100.in-addr.arpa PTR no.internet.access"
+local-zone: "78.100.in-addr.arpa" redirect
+local-data: "78.100.in-addr.arpa PTR no.internet.access"
+local-zone: "79.100.in-addr.arpa" redirect
+local-data: "79.100.in-addr.arpa PTR no.internet.access"
+local-zone: "80.100.in-addr.arpa" redirect
+local-data: "80.100.in-addr.arpa PTR no.internet.access"
+local-zone: "81.100.in-addr.arpa" redirect
+local-data: "81.100.in-addr.arpa PTR no.internet.access"
+local-zone: "82.100.in-addr.arpa" redirect
+local-data: "82.100.in-addr.arpa PTR no.internet.access"
+local-zone: "83.100.in-addr.arpa" redirect
+local-data: "83.100.in-addr.arpa PTR no.internet.access"
+local-zone: "84.100.in-addr.arpa" redirect
+local-data: "84.100.in-addr.arpa PTR no.internet.access"
+local-zone: "85.100.in-addr.arpa" redirect
+local-data: "85.100.in-addr.arpa PTR no.internet.access"
+local-zone: "86.100.in-addr.arpa" redirect
+local-data: "86.100.in-addr.arpa PTR no.internet.access"
+local-zone: "87.100.in-addr.arpa" redirect
+local-data: "87.100.in-addr.arpa PTR no.internet.access"
+local-zone: "88.100.in-addr.arpa" redirect
+local-data: "88.100.in-addr.arpa PTR no.internet.access"
+local-zone: "89.100.in-addr.arpa" redirect
+local-data: "89.100.in-addr.arpa PTR no.internet.access"
+local-zone: "90.100.in-addr.arpa" redirect
+local-data: "90.100.in-addr.arpa PTR no.internet.access"
+local-zone: "91.100.in-addr.arpa" redirect
+local-data: "91.100.in-addr.arpa PTR no.internet.access"
+local-zone: "92.100.in-addr.arpa" redirect
+local-data: "92.100.in-addr.arpa PTR no.internet.access"
+local-zone: "93.100.in-addr.arpa" redirect
+local-data: "93.100.in-addr.arpa PTR no.internet.access"
+local-zone: "94.100.in-addr.arpa" redirect
+local-data: "94.100.in-addr.arpa PTR no.internet.access"
+local-zone: "95.100.in-addr.arpa" redirect
+local-data: "95.100.in-addr.arpa PTR no.internet.access"
+local-zone: "96.100.in-addr.arpa" redirect
+local-data: "96.100.in-addr.arpa PTR no.internet.access"
+local-zone: "97.100.in-addr.arpa" redirect
+local-data: "97.100.in-addr.arpa PTR no.internet.access"
+local-zone: "98.100.in-addr.arpa" redirect
+local-data: "98.100.in-addr.arpa PTR no.internet.access"
+local-zone: "99.100.in-addr.arpa" redirect
+local-data: "99.100.in-addr.arpa PTR no.internet.access"
+local-zone: "100.100.in-addr.arpa" redirect
+local-data: "100.100.in-addr.arpa PTR no.internet.access"
+local-zone: "101.100.in-addr.arpa" redirect
+local-data: "101.100.in-addr.arpa PTR no.internet.access"
+local-zone: "102.100.in-addr.arpa" redirect
+local-data: "102.100.in-addr.arpa PTR no.internet.access"
+local-zone: "103.100.in-addr.arpa" redirect
+local-data: "103.100.in-addr.arpa PTR no.internet.access"
+local-zone: "104.100.in-addr.arpa" redirect
+local-data: "104.100.in-addr.arpa PTR no.internet.access"
+local-zone: "105.100.in-addr.arpa" redirect
+local-data: "105.100.in-addr.arpa PTR no.internet.access"
+local-zone: "106.100.in-addr.arpa" redirect
+local-data: "106.100.in-addr.arpa PTR no.internet.access"
+local-zone: "107.100.in-addr.arpa" redirect
+local-data: "107.100.in-addr.arpa PTR no.internet.access"
+local-zone: "108.100.in-addr.arpa" redirect
+local-data: "108.100.in-addr.arpa PTR no.internet.access"
+local-zone: "109.100.in-addr.arpa" redirect
+local-data: "109.100.in-addr.arpa PTR no.internet.access"
+local-zone: "110.100.in-addr.arpa" redirect
+local-data: "110.100.in-addr.arpa PTR no.internet.access"
+local-zone: "111.100.in-addr.arpa" redirect
+local-data: "111.100.in-addr.arpa PTR no.internet.access"
+local-zone: "112.100.in-addr.arpa" redirect
+local-data: "112.100.in-addr.arpa PTR no.internet.access"
+local-zone: "113.100.in-addr.arpa" redirect
+local-data: "113.100.in-addr.arpa PTR no.internet.access"
+local-zone: "114.100.in-addr.arpa" redirect
+local-data: "114.100.in-addr.arpa PTR no.internet.access"
+local-zone: "115.100.in-addr.arpa" redirect
+local-data: "115.100.in-addr.arpa PTR no.internet.access"
+local-zone: "116.100.in-addr.arpa" redirect
+local-data: "116.100.in-addr.arpa PTR no.internet.access"
+local-zone: "117.100.in-addr.arpa" redirect
+local-data: "117.100.in-addr.arpa PTR no.internet.access"
+local-zone: "118.100.in-addr.arpa" redirect
+local-data: "118.100.in-addr.arpa PTR no.internet.access"
+local-zone: "119.100.in-addr.arpa" redirect
+local-data: "119.100.in-addr.arpa PTR no.internet.access"
+local-zone: "120.100.in-addr.arpa" redirect
+local-data: "120.100.in-addr.arpa PTR no.internet.access"
+local-zone: "121.100.in-addr.arpa" redirect
+local-data: "121.100.in-addr.arpa PTR no.internet.access"
+local-zone: "122.100.in-addr.arpa" redirect
+local-data: "122.100.in-addr.arpa PTR no.internet.access"
+local-zone: "123.100.in-addr.arpa" redirect
+local-data: "123.100.in-addr.arpa PTR no.internet.access"
+local-zone: "124.100.in-addr.arpa" redirect
+local-data: "124.100.in-addr.arpa PTR no.internet.access"
+local-zone: "125.100.in-addr.arpa" redirect
+local-data: "125.100.in-addr.arpa PTR no.internet.access"
+local-zone: "126.100.in-addr.arpa" redirect
+local-data: "126.100.in-addr.arpa PTR no.internet.access"
+local-zone: "127.100.in-addr.arpa" redirect
+local-data: "127.100.in-addr.arpa PTR no.internet.access"

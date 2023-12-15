@@ -1,0 +1,22 @@
+---
+- hosts: openbsd_ntp_clients
+  become: True
+  become_method: doas
+  vars:
+    max_clients: 10
+  tasks:
+  - name: write the standard configuration file with remote IP address inclusion
+    template:
+      src: obsd-ntpd-client.jinga
+      dest: /etc/ntpd.conf
+      owner: root
+      group: wheel
+      mode: '0600'
+      backup: no
+    notify:
+    - restart openntpd
+  - name: make sure openntpd is running (and enabled at boot)
+    service: name=ntpd state=started enabled=yes
+  handlers:
+    - name: restart openntpd
+      service: name=ntpd state=restarted

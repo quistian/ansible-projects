@@ -1,0 +1,22 @@
+---
+- hosts: openbsd_sudo
+  become: True
+  become_method: sudo
+  vars:
+    max_clients: 10
+  tasks:
+  - name: write the standard configuration file with remote IP address inclusion
+    template:
+      src: obsd-snmpd.jinga
+      dest: /etc/snmpd.conf
+      owner: root
+      group: wheel
+      mode: '0600'
+      backup: no
+    notify:
+    - restart snmpd
+  - name: make sure snmpd is running (and enabled at boot)
+    service: name=snmpd state=started enabled=yes
+  handlers:
+    - name: restart snmpd
+      service: name=snmpd state=restarted

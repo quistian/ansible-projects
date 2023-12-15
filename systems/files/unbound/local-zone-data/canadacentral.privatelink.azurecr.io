@@ -1,0 +1,6 @@
+local-data: "q031_test.canadacentral.azurecr.io. CNAME q031_test.canadacentral.privatelink.azurecr.io."
+local-data: "q228_test.canadacentral.azurecr.io. CNAME q228_test.canadacentral.privatelink.azurecr.io."
+local-data: "q234_test.canadacentral.azurecr.io. CNAME q234_test.canadacentral.privatelink.azurecr.io."
+local-data: "q277_test.canadacentral.azurecr.io. CNAME q277_test.canadacentral.privatelink.azurecr.io."
+local-data: "q278_test.canadacentral.azurecr.io. CNAME q278_test.canadacentral.privatelink.azurecr.io."
+local-data: "q574_test.canadacentral.azurecr.io. CNAME q574_test.canadacentral.privatelink.azurecr.io."

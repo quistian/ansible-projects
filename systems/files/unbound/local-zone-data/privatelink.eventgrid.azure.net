@@ -1,0 +1,7 @@
+local-data: "q031_test.eventgrid.azure.net. CNAME q031_test.privatelink.eventgrid.azure.net."
+local-data: "q228_test.eventgrid.azure.net. CNAME q228_test.privatelink.eventgrid.azure.net."
+local-data: "q234_test.eventgrid.azure.net. CNAME q234_test.privatelink.eventgrid.azure.net."
+local-data: "q277_test.eventgrid.azure.net. CNAME q277_test.privatelink.eventgrid.azure.net."
+local-data: "q278_test.eventgrid.azure.net. CNAME q278_test.privatelink.eventgrid.azure.net."
+local-data: "q569_test.eventgrid.azure.net. CNAME q569_test.privatelink.eventgrid.azure.net."
+local-data: "q574_test.eventgrid.azure.net. CNAME q574_test.privatelink.eventgrid.azure.net."

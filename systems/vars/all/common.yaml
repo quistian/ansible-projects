@@ -1,0 +1,54 @@
+---
+
+#
+# general vars for all distributions
+#
+
+dnscache_service: unbound
+script_dir: /root/scripts
+test_file: /tmp/test.file
+
+caching_pkgs:
+  - dnsdist
+  - filebeat
+  - packetbeat
+
+beats:
+  - filebeat
+  - packetbeat
+
+anycast: 128.100.120.120
+localhost: 127.0.0.1
+
+local_resolvers:
+  - dns1
+  - dns4
+  - dns5
+
+remote_resolvers:
+  - google
+  - cloudflare
+  - verisign
+
+resolvers:
+  dns1:
+    - 128.100.100.128
+    - 128.100.100.129
+  dns4:
+    - 128.100.56.135
+    - 128.100.56.131
+  dns5:
+    - 128.100.96.34
+    - 128.100.96.36
+  google:
+    - 8.8.8.8
+    - 8.8.4.4
+  cloudflare:
+    - 1.1.1.1
+    - 1.0.0.1
+  verisign:
+    - 64.6.64.6
+    - 64.6.65.6
+  commodo:
+    - 8.26.56.26
+    - 8.20.247.20

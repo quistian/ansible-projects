@@ -1,0 +1,7 @@
+local-data: "q031_test.file.core.windows.net. CNAME q031_test.privatelink.file.core.windows.net."
+local-data: "q228_test.file.core.windows.net. CNAME q228_test.privatelink.file.core.windows.net."
+local-data: "q234_test.file.core.windows.net. CNAME q234_test.privatelink.file.core.windows.net."
+local-data: "q277_test.file.core.windows.net. CNAME q277_test.privatelink.file.core.windows.net."
+local-data: "q278_test.file.core.windows.net. CNAME q278_test.privatelink.file.core.windows.net."
+local-data: "q569_test.file.core.windows.net. CNAME q569_test.privatelink.file.core.windows.net."
+local-data: "q574_test.file.core.windows.net. CNAME q574_test.privatelink.file.core.windows.net."

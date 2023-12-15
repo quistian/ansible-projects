@@ -1,0 +1,7 @@
+local-data: "q031_test.media.azure.net. CNAME q031_test.privatelink.media.azure.net."
+local-data: "q228_test.media.azure.net. CNAME q228_test.privatelink.media.azure.net."
+local-data: "q234_test.media.azure.net. CNAME q234_test.privatelink.media.azure.net."
+local-data: "q277_test.media.azure.net. CNAME q277_test.privatelink.media.azure.net."
+local-data: "q278_test.media.azure.net. CNAME q278_test.privatelink.media.azure.net."
+local-data: "q569_test.media.azure.net. CNAME q569_test.privatelink.media.azure.net."
+local-data: "q574_test.media.azure.net. CNAME q574_test.privatelink.media.azure.net."

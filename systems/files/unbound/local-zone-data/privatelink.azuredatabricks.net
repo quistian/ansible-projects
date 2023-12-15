@@ -1,0 +1,7 @@
+local-data: "q031_test.azuredatabricks.net. CNAME q031_test.privatelink.azuredatabricks.net."
+local-data: "q228_test.azuredatabricks.net. CNAME q228_test.privatelink.azuredatabricks.net."
+local-data: "q234_test.azuredatabricks.net. CNAME q234_test.privatelink.azuredatabricks.net."
+local-data: "q277_test.azuredatabricks.net. CNAME q277_test.privatelink.azuredatabricks.net."
+local-data: "q278_test.azuredatabricks.net. CNAME q278_test.privatelink.azuredatabricks.net."
+local-data: "q569_test.azuredatabricks.net. CNAME q569_test.privatelink.azuredatabricks.net."
+local-data: "q574_test.azuredatabricks.net. CNAME q574_test.privatelink.azuredatabricks.net."

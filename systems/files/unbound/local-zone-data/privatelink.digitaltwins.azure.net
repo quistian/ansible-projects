@@ -1,0 +1,7 @@
+local-data: "q031_test.digitaltwins.azure.net. CNAME q031_test.privatelink.digitaltwins.azure.net."
+local-data: "q228_test.digitaltwins.azure.net. CNAME q228_test.privatelink.digitaltwins.azure.net."
+local-data: "q234_test.digitaltwins.azure.net. CNAME q234_test.privatelink.digitaltwins.azure.net."
+local-data: "q277_test.digitaltwins.azure.net. CNAME q277_test.privatelink.digitaltwins.azure.net."
+local-data: "q278_test.digitaltwins.azure.net. CNAME q278_test.privatelink.digitaltwins.azure.net."
+local-data: "q569_test.digitaltwins.azure.net. CNAME q569_test.privatelink.digitaltwins.azure.net."
+local-data: "q574_test.digitaltwins.azure.net. CNAME q574_test.privatelink.digitaltwins.azure.net."

@@ -1,0 +1,47 @@
+---
+
+- name: Enable Duo MFA on OpenBSD
+  hosts: obsd_doas
+  gather_facts: true
+  become: yes
+
+  tasks:
+
+  - name: Make sure the duo packages are installed
+    openbsd_pkg:
+      name:
+        - login_duo
+      state: latest
+    tags: pkgs
+
+  - name: Add the correct config to the end of the sshd_config file
+    ansible.builtin.blockinfile:
+      path: /etc/ssh/sshd_config
+      block: |
+        
+        # Duo MFA for ssh
+        Match Group duo
+            ForceCommand /usr/local/sbin/login_duo
+            PermitTunnel no
+            AllowTcpForwarding no
+      insertafter: "EOF"
+      state: present
+    notify:
+      - Restart sshd
+
+  - name: Add a group duo
+    ansible.builtin.group:
+      name: duo
+      state: present
+
+  - name: Add a list of users to the group duo
+    ansible.builtin.user:
+      name: russ
+      groups: duo
+      append: yes
+
+  handlers:
+    - name: Restart sshd
+      ansible.builtin.service:
+        name: sshd
+        state: restarted

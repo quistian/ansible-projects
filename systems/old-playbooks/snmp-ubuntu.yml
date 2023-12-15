@@ -1,0 +1,19 @@
+---
+- hosts: ubuntu
+  vars:
+    max_clients: 10
+  become: yes
+  tasks:
+  - name: make sure snmpd is installed
+    apt: name=snmpd state=latest
+  - name: make sure snmp-mibs-downloader is installed
+    apt: name=snmp-mibs-downloader state=latest
+  - name: write the standard configuration file
+    template: src=ubuntu-snmpd.jinga dest=/etc/snmp/snmpd.conf
+    notify:
+    - restart snmpd
+  - name: make sure snmpd is running (and enabled at boot)
+    service: name=snmpd state=started enabled=yes
+  handlers:
+    - name: restart snmpd
+      service: name=snmpd state=restarted

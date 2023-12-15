@@ -1,0 +1,54 @@
+---
+- hosts: eclass
+  remote_user: ansible
+  vars:
+    os: Dunno
+
+  tasks:
+  - name: start by loading in some variables
+    include_vars: "{{ item }}"
+    with_first_found:
+      - '{{ ansible_distribution }}.yml'
+      - default.yml
+
+  - name: make sure snmp packages are installed for Ubuntu
+    apt:
+      pkg:
+        - snmpd
+        - snmp-mibs-downloader
+      state: present
+    when: ansible_distribution == "Ubuntu"
+    become: yes
+    become_method: "{{ become_method }}"
+
+  - name: testing
+    debug:
+      msg: '{{ snmpd_dest_file }}'
+
+  - name: write the configuration file
+    template:
+      src: '{{ ansible_distribution }}_snmpd.j2'
+      dest: '{{ snmpd_dest_file }}'
+      owner: root
+      mode: '0600'
+    notify:
+    - restart snmpd
+    become: yes
+    become_method: '{{ become_method }}'
+
+  handlers:
+    - name: restart snmpd
+      service:
+        name: snmpd
+        state: restarted
+      become: yes
+      become_method: "{{ become_method }}"
+
+    - name: make sure snmpd is running (and enabled at boot)
+      service:
+        name: snmpd
+        state: started
+        enabled: yes
+      become: yes
+      become_method: "{{ become_method }}"
+...

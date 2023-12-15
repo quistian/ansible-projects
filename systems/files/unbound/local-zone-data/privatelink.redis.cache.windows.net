@@ -1,0 +1,7 @@
+local-data: "q031_test.redis.cache.windows.net. CNAME q031_test.privatelink.redis.cache.windows.net."
+local-data: "q228_test.redis.cache.windows.net. CNAME q228_test.privatelink.redis.cache.windows.net."
+local-data: "q234_test.redis.cache.windows.net. CNAME q234_test.privatelink.redis.cache.windows.net."
+local-data: "q277_test.redis.cache.windows.net. CNAME q277_test.privatelink.redis.cache.windows.net."
+local-data: "q278_test.redis.cache.windows.net. CNAME q278_test.privatelink.redis.cache.windows.net."
+local-data: "q569_test.redis.cache.windows.net. CNAME q569_test.privatelink.redis.cache.windows.net."
+local-data: "q574_test.redis.cache.windows.net. CNAME q574_test.privatelink.redis.cache.windows.net."

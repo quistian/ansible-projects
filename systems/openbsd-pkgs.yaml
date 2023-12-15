@@ -1,0 +1,33 @@
+---
+
+- name: Make sure OpenBSD packages are installed
+  hosts: obsd_doas
+  become: yes
+
+  tasks:
+
+  - name: Make sure base packages are installed
+    openbsd_pkg:
+      name:
+        - bacula-client
+        - bash--
+        - curl
+        - login_duo
+        - python3
+        - mutt--
+        - pwgen
+        - vim--no_x11-python3
+      state: latest
+
+  - name: Create some system directories
+    ansible.builtin.file:
+      path: "{{ item }}"
+      state: directory
+      owner: root
+      group: wheel
+      mode: 0775
+    with_items:
+      - /etc/sectigo
+      - /etc/ssl/certs
+      - /etc/ssl/csrs
+      - /root/scripts

@@ -1,0 +1,7 @@
+local-data: "q031_test.redisenterprise.cache.azure.net. CNAME q031_test.privatelink.redisenterprise.cache.azure.net."
+local-data: "q228_test.redisenterprise.cache.azure.net. CNAME q228_test.privatelink.redisenterprise.cache.azure.net."
+local-data: "q234_test.redisenterprise.cache.azure.net. CNAME q234_test.privatelink.redisenterprise.cache.azure.net."
+local-data: "q277_test.redisenterprise.cache.azure.net. CNAME q277_test.privatelink.redisenterprise.cache.azure.net."
+local-data: "q278_test.redisenterprise.cache.azure.net. CNAME q278_test.privatelink.redisenterprise.cache.azure.net."
+local-data: "q569_test.redisenterprise.cache.azure.net. CNAME q569_test.privatelink.redisenterprise.cache.azure.net."
+local-data: "q574_test.redisenterprise.cache.azure.net. CNAME q574_test.privatelink.redisenterprise.cache.azure.net."

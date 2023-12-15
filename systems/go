@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#  --check \
+#  -t go \
+#  --check \
+
+ansible-playbook \
+  -K \
+  --limit dns5 \
+  -v \
+  --tags "vars,unboundfiles" \
+  dns.yaml

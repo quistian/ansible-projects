@@ -1,0 +1,411 @@
+
+PLAY [show facts] **************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [dns1]
+
+TASK [print them out] **********************************************************
+ok: [dns1] => {
+    "ansible_facts": {
+        "all_ipv4_addresses": [
+            "128.100.100.128",
+            "128.100.100.129"
+        ],
+        "all_ipv6_addresses": [],
+        "ansible_local": {},
+        "apparmor": {
+            "status": "disabled"
+        },
+        "architecture": "amd64",
+        "date_time": {
+            "date": "2023-10-17",
+            "day": "17",
+            "epoch": "1697557908",
+            "epoch_int": "1697557908",
+            "hour": "11",
+            "iso8601": "2023-10-17T15:51:48Z",
+            "iso8601_basic": "20231017T115148095643",
+            "iso8601_basic_short": "20231017T115148",
+            "iso8601_micro": "2023-10-17T15:51:48.095643Z",
+            "minute": "51",
+            "month": "10",
+            "second": "48",
+            "time": "11:51:48",
+            "tz": "EDT",
+            "tz_dst": "EDT",
+            "tz_offset": "-0400",
+            "weekday": "Tuesday",
+            "weekday_number": "2",
+            "weeknumber": "42",
+            "year": "2023"
+        },
+        "default_ipv4": {
+            "address": "128.100.100.128",
+            "broadcast": "128.100.100.255",
+            "device": "vmx0",
+            "flags": [
+                "UP",
+                "BROADCAST",
+                "RUNNING",
+                "SIMPLEX",
+                "MULTICAST"
+            ],
+            "gateway": "128.100.100.29",
+            "interface": "vmx0",
+            "macaddress": "00:50:56:92:1e:7f",
+            "media": "Ethernet",
+            "media_select": "autoselect",
+            "media_type": "10GbaseT)",
+            "mtu": "1500",
+            "netmask": "255.255.255.0",
+            "network": "128.100.100.0",
+            "status": "active",
+            "type": "ether"
+        },
+        "default_ipv6": {},
+        "devices": [
+            "cd0:",
+            "sd0:a29f72fae6ace85f",
+            "fd0:"
+        ],
+        "distribution": "OpenBSD",
+        "distribution_release": "release",
+        "distribution_version": "7.3",
+        "dns": {
+            "nameservers": [
+                "127.0.0.1",
+                "128.100.56.135",
+                "128.100.96.34"
+            ]
+        },
+        "domain": "utoronto.ca",
+        "effective_group_id": 1002,
+        "effective_user_id": 1002,
+        "env": {
+            "HOME": "/home/ansible",
+            "LC_CTYPE": "C.UTF-8",
+            "LOGNAME": "ansible",
+            "MAIL": "/var/mail/ansible",
+            "PATH": "/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11R6/bin:/usr/local/bin:/usr/local/sbin",
+            "PWD": "/home/ansible",
+            "SHELL": "/bin/ksh",
+            "SSH_CLIENT": "128.100.103.17 11689 22",
+            "SSH_CONNECTION": "128.100.103.17 11689 128.100.100.128 22",
+            "SSH_TTY": "/dev/ttyp1",
+            "TERM": "xterm-256color",
+            "USER": "ansible",
+            "_": "/bin/sh"
+        },
+        "fibre_channel_wwn": [],
+        "fips": false,
+        "fqdn": "dns1.utoronto.ca",
+        "gather_subset": [
+            "all"
+        ],
+        "hostname": "dns1",
+        "hostnqn": "",
+        "interfaces": [
+            "lo0",
+            "pflog0",
+            "vmx0"
+        ],
+        "is_chroot": false,
+        "iscsi_iqn": "",
+        "kernel": "7.3",
+        "kernel_version": "GENERIC#1072",
+        "lo0": {
+            "device": "lo0",
+            "flags": [
+                "UP",
+                "LOOPBACK",
+                "RUNNING",
+                "MULTICAST"
+            ],
+            "ipv4": [
+                {
+                    "address": "127.0.0.1",
+                    "broadcast": "127.255.255.255",
+                    "netmask": "255.0.0.0",
+                    "network": "127.0.0.0"
+                }
+            ],
+            "ipv6": [
+                {
+                    "address": "::1",
+                    "prefix": "128"
+                },
+                {
+                    "address": "fe80::1%lo0",
+                    "prefix": "64",
+                    "scope": "0x3"
+                }
+            ],
+            "macaddress": "unknown",
+            "mtu": "32768",
+            "type": "loopback"
+        },
+        "loadavg": {
+            "15m": 0.15283203125,
+            "1m": 0.14453125,
+            "5m": 0.1787109375
+        },
+        "lsb": {},
+        "machine": "amd64",
+        "memfree_mb": 0,
+        "memtotal_mb": 4078,
+        "module_setup": true,
+        "mounts": [
+            {
+                "block_available": 143148,
+                "block_size": 16384,
+                "block_total": 504711,
+                "block_used": 361563,
+                "device": "a29f72fae6ace85f.a",
+                "fstype": "ffs",
+                "inode_available": 152827,
+                "inode_total": 155518,
+                "inode_used": 2691,
+                "mount": "/",
+                "options": "rw",
+                "size_available": 293167104,
+                "size_total": 1033648128
+            },
+            {
+                "block_available": 23945189,
+                "block_size": 16384,
+                "block_total": 25205678,
+                "block_used": 1260489,
+                "device": "a29f72fae6ace85f.k",
+                "fstype": "ffs",
+                "inode_available": 6505878,
+                "inode_total": 6505918,
+                "inode_used": 40,
+                "mount": "/home",
+                "options": "rw,nodev,nosuid",
+                "size_available": 49039747072,
+                "size_total": 51621228544
+            },
+            {
+                "block_available": 1927039,
+                "block_size": 16384,
+                "block_total": 2028735,
+                "block_used": 101696,
+                "device": "a29f72fae6ace85f.d",
+                "fstype": "ffs",
+                "inode_available": 544282,
+                "inode_total": 544318,
+                "inode_used": 36,
+                "mount": "/tmp",
+                "options": "rw,nodev,nosuid",
+                "size_available": 3946575872,
+                "size_total": 4154849280
+            },
+            {
+                "block_available": 2146327,
+                "block_size": 16384,
+                "block_total": 3044751,
+                "block_used": 898424,
+                "device": "a29f72fae6ace85f.f",
+                "fstype": "ffs",
+                "inode_available": 786402,
+                "inode_total": 803518,
+                "inode_used": 17116,
+                "mount": "/usr",
+                "options": "rw,nodev",
+                "size_available": 4395677696,
+                "size_total": 6235650048
+            },
+            {
+                "block_available": 267949,
+                "block_size": 16384,
+                "block_total": 504711,
+                "block_used": 236762,
+                "device": "a29f72fae6ace85f.g",
+                "fstype": "ffs",
+                "inode_available": 146145,
+                "inode_total": 155518,
+                "inode_used": 9373,
+                "mount": "/usr/X11R6",
+                "options": "rw,nodev",
+                "size_available": 548759552,
+                "size_total": 1033648128
+            },
+            {
+                "block_available": 6530538,
+                "block_size": 16384,
+                "block_total": 7322711,
+                "block_used": 792173,
+                "device": "a29f72fae6ace85f.h",
+                "fstype": "ffs",
+                "inode_available": 1865623,
+                "inode_total": 1892158,
+                "inode_used": 26535,
+                "mount": "/usr/local",
+                "options": "rw,wxallowed,nodev",
+                "size_available": 13374541824,
+                "size_total": 14996912128
+            },
+            {
+                "block_available": 2892513,
+                "block_size": 16384,
+                "block_total": 3044751,
+                "block_used": 152238,
+                "device": "a29f72fae6ace85f.j",
+                "fstype": "ffs",
+                "inode_available": 803517,
+                "inode_total": 803518,
+                "inode_used": 1,
+                "mount": "/usr/obj",
+                "options": "rw,nodev,nosuid",
+                "size_available": 5923866624,
+                "size_total": 6235650048
+            },
+            {
+                "block_available": 962083,
+                "block_size": 16384,
+                "block_total": 1012719,
+                "block_used": 50636,
+                "device": "a29f72fae6ace85f.i",
+                "fstype": "ffs",
+                "inode_available": 285117,
+                "inode_total": 285118,
+                "inode_used": 1,
+                "mount": "/usr/src",
+                "options": "rw,nodev,nosuid",
+                "size_available": 1970345984,
+                "size_total": 2074048512
+            },
+            {
+                "block_available": 4522720,
+                "block_size": 16384,
+                "block_total": 5943559,
+                "block_used": 1420839,
+                "device": "a29f72fae6ace85f.e",
+                "fstype": "ffs",
+                "inode_available": 1554109,
+                "inode_total": 1555198,
+                "inode_used": 1089,
+                "mount": "/var",
+                "options": "rw,nodev,nosuid",
+                "size_available": 9262530560,
+                "size_total": 12172408832
+            }
+        ],
+        "nodename": "dns1.utoronto.ca",
+        "os_family": "OpenBSD",
+        "pflog0": {
+            "device": "pflog0",
+            "flags": [
+                "UP",
+                "RUNNING",
+                "PROMISC"
+            ],
+            "ipv4": [],
+            "ipv6": [],
+            "macaddress": "unknown",
+            "mtu": "33136",
+            "type": "unknown"
+        },
+        "pkg_mgr": "openbsd_pkg",
+        "processor": [
+            "Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz"
+        ],
+        "processor_cores": "1",
+        "processor_count": "1",
+        "product_name": "VMware Virtual Platform",
+        "product_serial": "VMware-42 12 16 dc 57 17 c7 31-f5 33 47 bf 09 11 e4 ee",
+        "product_uuid": "421216dc-5717-c731-f533-47bf0911e4ee",
+        "product_version": "None",
+        "python": {
+            "executable": "/usr/local/bin/python3",
+            "has_sslcontext": true,
+            "type": "cpython",
+            "version": {
+                "major": 3,
+                "micro": 11,
+                "minor": 10,
+                "releaselevel": "final",
+                "serial": 0
+            },
+            "version_info": [
+                3,
+                10,
+                11,
+                "final",
+                0
+            ]
+        },
+        "python_version": "3.10.11",
+        "real_group_id": 1002,
+        "real_user_id": 1002,
+        "selinux": {
+            "status": "Missing selinux Python library"
+        },
+        "selinux_python_present": false,
+        "service_mgr": "bsdinit",
+        "ssh_host_key_dsa_public": "AAAAB3NzaC1kc3MAAACBAKFDObGZLNSu0WbRzMIznbRbBlCqDhxdoFpl6aYqsql9JkChckGVx3X+wOft4uFwOf1BnTzW6i9jYlKwcoAtxpwC4qCw8IfQOC4Hkx+vLJcxftsfOT/W0ri7e+eYytbShSKhJIqyJj0vda/zvpWcP3uAxRAqWdsME/qFkQJq44EZAAAAFQDrX2vu6MXQGuqAJio4De50/xvEXQAAAIBep9znm7OYU01N+VYljDy7ErYsMzaN+dp0xowl/QMMytwCwxYdnyV5KSgj3eKzikxYQMw3aKLzvgn86L4c188abrwYEgCR1/ZMijLng/M1GUg+s3/ecFcXLftLuZDwIu7agFWmdvFTIvgtZUnbrWCiLSStYQksBcYrOOoIRdb/zQAAAIAYjANrp4YxaGPKU2iVUu9HgZg0CEQe362iYfnCi2HV3T7ez9H09HXB/0B7cY/1NmAJ/htX531fNxsPDLe50r+YCbirGRCfTZ4hjol+b+OKPo9UN62iByPMxiepAJ7gSKcVei2doYr/Q/8QvTURJ8Lpv3MWDGC9Mkhj374nzEVkGg==",
+        "ssh_host_key_dsa_public_keytype": "ssh-dss",
+        "ssh_host_key_ecdsa_public": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBB6C8QD1pexuBrkZSKci4iMJ9sjS4fAZcKeX/yqq3FR3ivbNI1kF8oQRRxwrnbB67tnL5d4zwxpQVFGsGneGaFk=",
+        "ssh_host_key_ecdsa_public_keytype": "ecdsa-sha2-nistp256",
+        "ssh_host_key_ed25519_public": "AAAAC3NzaC1lZDI1NTE5AAAAIFBFNGaqfN+/ier/e0woBJOCAIkFRdIGL0bD6cv1L2Dw",
+        "ssh_host_key_ed25519_public_keytype": "ssh-ed25519",
+        "ssh_host_key_rsa_public": "AAAAB3NzaC1yc2EAAAADAQABAAABgQC6vlliGEOG/OwXsp3cRJq2rsJCrGOGOJ74nq/kf2GCVTApR4MeQApPWgHXTY2VIO9y8VJpLol6FdqX52iC2n/0rnNsDk0u+x6FFjG/l+UAmXrZWvqwosbtQCFEls56upTGGAy3v/gnhBx4Y8TqK6ghNG03V2rZ7HYOGVchETD+1byIIC9EsmiM5D2k0y/syw9saxIN1FIkOG4RGiqXRE8P62LuyhYUXYyH1oc1W/wjQ9a3qyNzofVawV7rkYXCIaoLEP6Vt2v+NB8J/rRm23zyuUlVjM7RZqC2eZY73XIOKR6xNTevUYkEyx1VT54T7sIRfmNHkowKfOtsnzbMCzWsZDEzQSTL9BChPevDNtxSXsTWuSc0q9nKopA/eJdalb/6ok8decRVWOqudrN5bA5GQKHGLTSxI2UdeNCqKpvR90HCFpLwTxHNcWTs4srEuGjekFH7YYTOypMSo0kvGMGSTIj1+OQGj+NwbeHYLlLuiTJoxtUqZyadffiZDciO0eM=",
+        "ssh_host_key_rsa_public_keytype": "ssh-rsa",
+        "swapfree_mb": 4335,
+        "swaptotal_mb": 4335,
+        "system": "OpenBSD",
+        "system_capabilities": "N/A",
+        "system_capabilities_enforced": "N/A",
+        "system_vendor": "VMware, Inc.",
+        "uptime_seconds": 13984024,
+        "user_dir": "/home/ansible",
+        "user_gecos": "sutherl4,Ansible administration",
+        "user_gid": 1002,
+        "user_id": "ansible",
+        "user_shell": "/bin/ksh",
+        "user_uid": 1002,
+        "userspace_bits": "64",
+        "virtualization_role": "guest",
+        "virtualization_tech_guest": [
+            "VMware"
+        ],
+        "virtualization_tech_host": [],
+        "virtualization_type": "VMware",
+        "vmx0": {
+            "device": "vmx0",
+            "flags": [
+                "UP",
+                "BROADCAST",
+                "RUNNING",
+                "SIMPLEX",
+                "MULTICAST"
+            ],
+            "ipv4": [
+                {
+                    "address": "128.100.100.128",
+                    "broadcast": "128.100.100.255",
+                    "netmask": "255.255.255.0",
+                    "network": "128.100.100.0"
+                },
+                {
+                    "address": "128.100.100.129",
+                    "broadcast": "128.100.100.129",
+                    "netmask": "255.255.255.255",
+                    "network": "128.100.100.129"
+                }
+            ],
+            "ipv6": [],
+            "macaddress": "00:50:56:92:1e:7f",
+            "media": "Ethernet",
+            "media_select": "autoselect",
+            "media_type": "10GbaseT)",
+            "mtu": "1500",
+            "status": "active",
+            "type": "ether"
+        }
+    }
+}
+
+PLAY RECAP *********************************************************************
+dns1                       : ok=2    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+

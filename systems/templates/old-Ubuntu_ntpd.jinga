@@ -1,0 +1,19 @@
+# sample ntpd configuration file, see ntpd.conf(5)
+
+# Addresses to listen on (ntpd does not listen by default)
+# Client only
+#listen on *
+
+# sync to a single server
+#server ntp.example.org
+
+# use a random selection of NTP Pool Time Servers
+# see http://support.ntp.org/bin/view/Servers/NTPPoolServers
+
+# local UofT ntp servers
+servers 0.pool.utoronto.ca
+servers 1.pool.utoronto.ca
+servers 2.pool.utoronto.ca
+
+# time server with excellent global adjacency
+server time.cloudflare.com

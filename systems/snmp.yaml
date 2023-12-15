@@ -1,0 +1,87 @@
+---
+
+- name: configure snmp agents for Ubuntu
+  hosts: ubuntu
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: make sure snmp packages are installed
+    apt:
+      name: snmpd
+      state: present
+
+  - name: write the configuration file
+    template:
+      src: "{{ ansible_facts['distribution'] }}_snmpd.jinga"
+      dest: /etc/snmp/snmpd.conf
+      owner: root
+      mode: '0600'
+    notify:
+    - restart snmpd
+
+  - name: make sure snmpd is running (and enabled at boot)
+    service:
+      name: snmpd
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: restart snmpd
+      service:
+        name: snmpd
+        state: restarted
+
+- name: For newer OpenBSD hosts
+  hosts: obsd_doas
+  gather_facts: true
+  become: yes
+  become_method: community.general.doas
+  become_user: root
+#environment:
+#USER: ansible
+#HOME: /home/ansible
+  tasks:
+  - name: Write the snmp client configuration file
+    ansible.builtin.template:
+      src: "{{ ansible_facts['distribution'] }}_snmpd.jinga"
+      dest: /etc/snmpd.conf
+      owner: root
+      group: wheel
+      mode: '0600'
+#    notify:
+#    - restart snmpd
+
+  - name: Make sure snmpd is running (and enabled at boot)
+    service:
+      name: snmpd
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: Restart snmpd
+      service:
+        name: snmpd
+        state: restarted
+
+- name: For older OpenBSD hosts
+  hosts: obsd_sudo
+  become: yes
+  become_method: sudo
+  tasks:
+  - name: Write the configuration file
+    template:
+      src: "{{ ansible_facts['distribution'] }}_snmpd.jinga"
+      dest: /etc/snmpd.conf
+      owner: root
+      group: wheel
+      mode: '0600'
+    notify:
+    - restart snmpd
+
+#  handlers:
+#- #name: restart snmpd
+#service:
+#  name: snmpd
+#  state: restarted
+
+...

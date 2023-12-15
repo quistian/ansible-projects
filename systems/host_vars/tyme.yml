@@ -1,0 +1,3 @@
+ntpd_dest_file: /etc/chrony/chrony.conf
+ntpd_service: chrony
+become_method: sudo

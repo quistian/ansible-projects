@@ -1,0 +1,15 @@
+---
+
+#
+# general locations and daemons specifically for OpenBSD
+#
+
+snmpd_dest_file: /etc/snmpd.conf
+ntpd_dest_file: /etc/ntpd.conf
+unbound_dir: /var/unbound/etc/
+unbound_conf_file: /var/unbound/etc/unbound.conf
+ssl_cert_dir: /etc/ssl/certs
+sectigo_dir: /etc/sectigo
+become_method: doas
+ntpd_service: ntpd
+...

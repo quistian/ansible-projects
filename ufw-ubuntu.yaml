@@ -1,0 +1,73 @@
+---
+
+- name: install openntpd and configure for Ubuntu
+  hosts: ubuntu
+  become: yes
+  become_method: sudo
+
+  tasks:
+
+#    community.general.ufw:
+
+  - name: Allow all and enable UFW
+    ufw:
+      state: enabled
+      policy: allow
+
+  - name: set logging
+    ufw:
+      logging: 'on'
+
+#  - name: Explicitly reject all ssh traffic from outside
+#    ufw:
+#      rule: reject
+#      direction: in
+#      proto: tcp
+#      src: any
+#      port: 22
+#      log: yes
+#      insert: 1
+
+  - name: allow ssh from 103, 102, etc...
+    ufw:
+      rule: allow
+      direction: in
+      proto: tcp
+      src: '{{ item }}'
+      dest: any
+      port: 22
+      comment: allow ssh from safe networks and hosts
+      insert_relative_to: first-ipv4
+    loop:
+      - 128.100.102.0/24
+      - 128.100.103.0/24
+
+  - name: add ssh rate limitng
+    ufw:
+      rule: limit
+      direction: in
+      proto: tcp
+      src: any
+      dest: any
+      port: 22
+      comment: limit ssh rates
+      insert_relative_to: last-ipv4
+
+  - name: add web access
+    ufw:
+      rule: allow
+      direction: in
+      proto: tcp
+      src: any
+      dest: any
+      port: 80,443
+      comment: All http and https traffic
+      insert_relative_to: last-ipv4
+
+  - name: delete a specific line number
+    ufw:
+      rule: allow
+      name: Apache Secure
+      delete: yes
+
+...

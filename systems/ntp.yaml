@@ -1,0 +1,48 @@
+---
+
+- name: install "{{ ntpd_service }}" and configure
+  gather_facts: true
+  hosts: ntp_hosts
+  become: true
+  vars:
+    max_clients: 10
+
+  tasks:
+
+  - name: start by loading in some common variables
+    ansible.builtin.include_vars:
+      dir: vars/all
+      extensions:
+        - 'yaml'
+        - 'yml'
+        - 'json'
+    tags: vars
+
+  - name: start by loading in some variables that are OS dependent
+    ansible.builtin.include_vars: "{{ item }}"
+    with_first_found:
+      - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yaml"
+      - "{{ ansible_distribution }}.yaml"
+      - default.yaml
+    tags: vars
+
+  - name: make sure "{{ ntpd_service }}" is installed for Ubuntu systems
+    apt:
+      name: "{{ ntpd_service }}"
+      state: present
+    become_method: "{{ become_method }}"
+    when: ansible_facts['distribution'] == 'Ubuntu'
+
+  - name: write the standard client configuration file
+    template:
+      src: ntpd_conf.jinga
+      dest: '{{ ntpd_dest_file }}'
+      owner: root
+    notify:
+    - Restart ntpd
+
+  handlers:
+    - name: Restart ntpd
+      service:
+        name: '{{ ntpd_service }}'
+        state: restarted

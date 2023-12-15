@@ -1,0 +1,12 @@
+---
+
+  - name: probe all hosts for correct standard packages
+    hosts: ubuntu
+    tasks:
+      - name: check for openntpd
+        apt:
+          name: openntpd
+      - name: check for snmpd
+        apt:
+          name: snmpd
+

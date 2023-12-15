@@ -1,0 +1,7 @@
+# local networks that can query the campus name servers to get Azure IP addresses
+127.0.0.0/8
+128.100.56.128/27
+128.100.102.0/23
+128.100.67.64/29
+142.150.0.5/24
+10.11.12.13/32

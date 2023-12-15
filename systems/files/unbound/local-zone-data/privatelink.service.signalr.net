@@ -1,0 +1,7 @@
+local-data: "q031_test.service.signalr.net. CNAME q031_test.privatelink.service.signalr.net."
+local-data: "q228_test.service.signalr.net. CNAME q228_test.privatelink.service.signalr.net."
+local-data: "q234_test.service.signalr.net. CNAME q234_test.privatelink.service.signalr.net."
+local-data: "q277_test.service.signalr.net. CNAME q277_test.privatelink.service.signalr.net."
+local-data: "q278_test.service.signalr.net. CNAME q278_test.privatelink.service.signalr.net."
+local-data: "q569_test.service.signalr.net. CNAME q569_test.privatelink.service.signalr.net."
+local-data: "q574_test.service.signalr.net. CNAME q574_test.privatelink.service.signalr.net."

@@ -1,0 +1,6 @@
+local-data: "q031_test_rps.blob.core.windows.net. CNAME q031_test_rps.privatelink.blob.core.windows.net."
+local-data: "q228_test.blob.core.windows.net. CNAME q228_test.privatelink.blob.core.windows.net."
+local-data: "q234_test.blob.core.windows.net. CNAME q234_test.privatelink.blob.core.windows.net."
+local-data: "q277_test.blob.core.windows.net. CNAME q277_test.privatelink.blob.core.windows.net."
+local-data: "q278_test.blob.core.windows.net. CNAME q278_test.privatelink.blob.core.windows.net."
+local-data: "q574_test.blob.core.windows.net. CNAME q574_test.privatelink.blob.core.windows.net."

@@ -1,0 +1,6 @@
+---
+- hosts: openbsd
+  tasks:
+  - name: get IP of remote hosts
+    debug:
+      msg: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"

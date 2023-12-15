@@ -1,0 +1,19 @@
+---
+
+# make sure this host is up to date
+
+- name: Update and upgrade apt packages and then reboot
+  hosts: ubuntu16
+  become: true
+  tasks:
+  - name: Let us update and upgrade
+    apt:
+      update_cache: yes
+      autoremove: yes
+      upgrade: 'yes'
+#     autoclean: yes
+
+#  - name: And then reboot
+#    reboot:
+
+...

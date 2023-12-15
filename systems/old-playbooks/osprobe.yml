@@ -1,0 +1,8 @@
+---
+
+  - name: probe all hosts
+    hosts: all
+    tasks:
+      - name: Classify Hosts as per their OS
+        group_by:
+          key: os_{{ ansible_facts['distribution'] }}

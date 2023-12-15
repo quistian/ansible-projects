@@ -1,0 +1,7 @@
+local-data: "q031_test.ods.opinsights.azure.com. CNAME q031_test.privatelink.ods.opinsights.azure.com."
+local-data: "q228_test.ods.opinsights.azure.com. CNAME q228_test.privatelink.ods.opinsights.azure.com."
+local-data: "q234_test.ods.opinsights.azure.com. CNAME q234_test.privatelink.ods.opinsights.azure.com."
+local-data: "q277_test.ods.opinsights.azure.com. CNAME q277_test.privatelink.ods.opinsights.azure.com."
+local-data: "q278_test.ods.opinsights.azure.com. CNAME q278_test.privatelink.ods.opinsights.azure.com."
+local-data: "q569_test.ods.opinsights.azure.com. CNAME q569_test.privatelink.ods.opinsights.azure.com."
+local-data: "q574_test.ods.opinsights.azure.com. CNAME q574_test.privatelink.ods.opinsights.azure.com."

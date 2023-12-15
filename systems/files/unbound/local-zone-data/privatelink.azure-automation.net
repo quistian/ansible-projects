@@ -1,0 +1,7 @@
+local-data: "q031_test.ca.azure-automation.net. CNAME q031_test.privatelink.azure-automation.net."
+local-data: "q228_test.ca.azure-automation.net. CNAME q228_test.privatelink.azure-automation.net."
+local-data: "q234_test.ca.azure-automation.net. CNAME q234_test.privatelink.azure-automation.net."
+local-data: "q277_test.ca.azure-automation.net. CNAME q277_test.privatelink.azure-automation.net."
+local-data: "q278_test.ca.azure-automation.net. CNAME q278_test.privatelink.azure-automation.net."
+local-data: "q569_test.ca.azure-automation.net. CNAME q569_test.privatelink.azure-automation.net."
+local-data: "q574_test.ca.azure-automation.net. CNAME q574_test.privatelink.azure-automation.net."

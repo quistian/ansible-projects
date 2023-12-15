@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ansible-playbook -K -v -l mirror sectigo_acme_cert_main.yml

@@ -1,0 +1,7 @@
+local-data: "q031_test.dicom.azurehealthcareapis.com. CNAME q031_test.privatelink.dicom.azurehealthcareapis.com."
+local-data: "q228_test.dicom.azurehealthcareapis.com. CNAME q228_test.privatelink.dicom.azurehealthcareapis.com."
+local-data: "q234_test.dicom.azurehealthcareapis.com. CNAME q234_test.privatelink.dicom.azurehealthcareapis.com."
+local-data: "q277_test.dicom.azurehealthcareapis.com. CNAME q277_test.privatelink.dicom.azurehealthcareapis.com."
+local-data: "q278_test.dicom.azurehealthcareapis.com. CNAME q278_test.privatelink.dicom.azurehealthcareapis.com."
+local-data: "q569_test.dicom.azurehealthcareapis.com. CNAME q569_test.privatelink.dicom.azurehealthcareapis.com."
+local-data: "q574_test.dicom.azurehealthcareapis.com. CNAME q574_test.privatelink.dicom.azurehealthcareapis.com."

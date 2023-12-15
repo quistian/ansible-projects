@@ -1,0 +1,12 @@
+---
+- hosts: madhaus
+  become: yes
+  become_user: root
+  tasks:
+  - name: make sure ansible is a sudoer
+    lineinfile:
+      path: /etc/sudoers.d/ansible
+      line: 'ansible ALL=(ALL) NOPASSWD: ALL'
+      state: present
+      mode: 0440
+      create: yes

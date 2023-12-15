@@ -1,0 +1,45 @@
+---
+
+- name: Manage OpenBSD OS issues on nodes
+  hosts: obsd_doas
+  become: yes
+
+  tasks:
+
+    - name: Make sure base packages are installed
+      community.general.openbsd_pkg:
+        name:
+          - bacula-client
+          - bash--
+          - curl
+          - login_duo
+          - python3
+          - mutt--
+          - pwgen
+          - vim--no_x11-python3
+        state: latest
+      tags: pkgs
+
+    - name: Create some system directories
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: directory
+        owner: root
+        group: wheel
+        mode: 0775
+      with_items:
+        - /etc/sectigo
+        - /etc/ssl/certs
+        - /etc/ssl/csrs
+        - /root/scripts
+      tags: files
+
+    - name: Perform a System Patch
+      community.general.syspatch:
+      register: syspatch
+
+    - name: Reboot if patch requires it
+      ansible.builtin.reboot:
+      when: syspatch.reboot_needed
+
+...

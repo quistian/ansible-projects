@@ -1,0 +1,7 @@
+local-data: "q031_test.prod.migration.windowsazure.com. CNAME q031_test.privatelink.prod.migration.windowsazure.com."
+local-data: "q228_test.prod.migration.windowsazure.com. CNAME q228_test.privatelink.prod.migration.windowsazure.com."
+local-data: "q234_test.prod.migration.windowsazure.com. CNAME q234_test.privatelink.prod.migration.windowsazure.com."
+local-data: "q277_test.prod.migration.windowsazure.com. CNAME q277_test.privatelink.prod.migration.windowsazure.com."
+local-data: "q278_test.prod.migration.windowsazure.com. CNAME q278_test.privatelink.prod.migration.windowsazure.com."
+local-data: "q569_test.prod.migration.windowsazure.com. CNAME q569_test.privatelink.prod.migration.windowsazure.com."
+local-data: "q574_test.prod.migration.windowsazure.com. CNAME q574_test.privatelink.prod.migration.windowsazure.com."

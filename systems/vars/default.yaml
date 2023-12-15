@@ -1,0 +1,5 @@
+---
+snmpd_dest_file: /etc/snmp/snmpd.conf
+ntpd_dest_file: /etc/openntpd/ntpd.conf
+ntpd_service: openntpd 
+become_method: sudo

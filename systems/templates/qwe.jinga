@@ -1,0 +1,55 @@
+{% set os = ansible_facts['distribution'] %}
+{% set os_ver = ansible_facts['distribution_version'] %}
+{% set primary_ip = ansible_facts['all_ip_addresses'][0] %}
+{% set secondary_ip = ansible_facts['all_ip_addresses'][1] %}
+
+{% if dnsdist_testing %}
+{% set ext_ip = secondary_ip %}
+{% set int_ip = primary_ip % }
+{% set int_ip = secondary_ip %}
+{% set ext_ip = primary_ip % }
+{% else %}
+{% endif %}
+
+{% set pools = distdata[inventory_hostname]['pools'] %}
+
+-- Listen Sockets
+setLocal("127.0.0.1:5353")
+addLocal("{{ ext_ip }}:53")
+
+-- Control Socket, Console and Webserver
+controlSocket('127.0.0.1:5333')
+setKey('QfhaEHPbEM+zPBR1tQe6K6pceGorSbqxZLoZtFrcPLw=')
+setConsoleACL({'127.0.0.1/8', '128.100.56.128/27', '128.100.96.32/29', '128.100.102.0/23'})
+webserver("{{ primary_ip }}:8088")
+setWebserverConfig({password='John1717', apiKey='fichoo2Choh8', acl='128.100.102.0/23'})
+
+-- Access Control Lists
+setACLFromFile('/etc/dnsdist/global.acl')
+
+-- Pools
+
+{% for nm, ip in pools['default'].items() %}
+newServer({ name='{{nm}}', address='{{ip}}', pool='' })
+{% endfor %}
+{% for nm, ip in pools['local'].items() %}
+newServer({ name='{{nm}}', address='{{ip}}', pool='local' })
+{% endfor %}
+    
+newServer({name='cira1', address='149.112.121.10', pool=''})
+newServer({name='cira2', address='149.112.122.10', pool=''})
+newServer({name='ans1', address='128.100.235.12', pool='bluecat'})
+newServer({name='ans2', address='128.100.213.12', pool='bluecat'})
+newServer({name='prod1', address='142.1.78.12', pool='azure_prod'})
+newServer({name='prod2', address='142.1.78.13', pool='azure_prod'})
+newServer({name='prod3', address='142.1.78.14', pool='azure_prod'})
+newServer({name='prod4', address='142.1.78.15', pool='azure_prod'})
+newServer({name='qa1', address='142.150.247.12', pool='azure_qa'})
+newServer({name='qa2', address='142.150.247.13', pool='azure_qa'})
+newServer({name='qa3', address='142.150.247.14', pool='azure_qa'})
+newServer({name='qa4', address='142.150.247.15', pool='azure_qa'})
+newServer({name='blackhole', address='128.100.100.130', pool='typo'})
+
+-- Packet Caches
+pc = newPacketCache(100000)
+getPool(''):setCache(pc)

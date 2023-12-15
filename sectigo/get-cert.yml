@@ -1,0 +1,82 @@
+## PRIVATE KEY ################################################################################
+- name: ({{ certgen_title }}) Create cert private key
+  openssl_privatekey:
+    path: "{{ data_dir }}/{{ certificate_name }}.key"
+    type: "{{ 'RSA' if key_type == 'rsa' else 'ECC' }}"
+    size: "{{ rsa_bits if key_type == 'rsa' else omit }}"
+    curve: >-
+      {{ omit if key_type == 'rsa' else
+         'secp256r1' if key_type == 'ec256' else
+         'secp384r1' if key_type == 'ec384' else
+         'secp521r1' if key_type == 'ec521' else
+         'invalid value for key_type!' }}
+    passphrase: "{{ certificate_passphrase | default(omit) | default(omit, true) }}"
+    cipher: "{{ 'auto' if certificate_passphrase | default() else omit }}"
+    force: true
+
+## CSR ########################################################################################
+- name: ({{ certgen_title }}) Create cert CSR
+  openssl_csr:
+    path: "{{ data_dir }}/{{ certificate_name }}.csr"
+    privatekey_path: "{{ data_dir }}/{{ certificate_name }}.key"
+    privatekey_passphrase: "{{ certificate_passphrase | default(omit) | default(omit, true) }}"
+    subject_alt_name: "{{ subject_alt_name }}"
+    subject_alt_name_critical: "{{ subject_alt_name_critical }}"
+    return_content: true
+  register: csr_result
+
+## ACME STEP 1 ################################################################################
+- name: ({{ certgen_title }}) Get challenges
+  acme_certificate:
+    select_crypto_backend: "{{ select_crypto_backend }}"
+    acme_version: 2
+    acme_directory: "{{ acme_dir }}"
+    account_key: "{{ (root_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
+    account_key_content: "{{ account_key_content | default(omit) }}"
+    account_key_passphrase: "{{ account_key_passphrase | default(omit) | default(omit, true) }}"
+    modify_account: "{{ modify_account }}"
+    csr: "{{ omit if use_csr_content | default(false) else data_dir ~ '/' ~ certificate_name ~ '.csr' }}"
+    csr_content: "{{ csr_result.csr if use_csr_content | default(false) else omit }}"
+    dest: "{{ data_dir }}/{{ certificate_name }}.pem"
+    fullchain_dest: "{{ data_dir }}/{{ certificate_name }}-fullchain.pem"
+    chain_dest: "{{ data_dir }}/{{ certificate_name }}-chain.pem"
+    challenge: "{{ challenge }}"
+    deactivate_authzs: "{{ deactivate_authzs | default(omit, no) }}"
+    force: "{{ force }}"
+    remaining_days: "{{ remaining_days }}"
+    terms_agreed: "{{ terms_agreed }}"
+    account_email: "{{ account_email }}"
+  register: challenge_data
+
+- name: ({{ certgen_title }}) Print challenge data
+  debug:
+    var: challenge_data
+
+## ACME STEP 2 ################################################################################
+- name: ({{ certgen_title }}) Get certificates
+  acme_certificate:
+    select_crypto_backend: "{{ select_crypto_backend }}"
+    acme_version: 2
+    acme_directory: "{{ acme_dir }}"
+    account_key: "{{ (root_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
+    account_key_content: "{{ account_key_content | default(omit) }}"
+    account_key_passphrase: "{{ account_key_passphrase | default(omit) | default(omit, true) }}"
+    modify_account: "{{ modify_account }}"
+    csr: "{{ omit if use_csr_content | default(false) else data_dir ~ '/' ~ certificate_name ~ '.csr' }}"
+    csr_content: "{{ csr_result.csr if use_csr_content | default(false) else omit }}"
+    dest: "{{ data_dir }}/{{ certificate_name }}.pem"
+    fullchain_dest: "{{ data_dir }}/{{ certificate_name }}-fullchain.pem"
+    chain_dest: "{{ data_dir }}/{{ certificate_name }}-chain.pem"
+    challenge: "{{ challenge }}"
+    deactivate_authzs: "{{ deactivate_authzs | default(omit, no) }}"
+    force: "{{ force }}"
+    remaining_days: "{{ remaining_days }}"
+    terms_agreed: "{{ terms_agreed }}"
+    account_email: "{{ account_email }}"
+    data: "{{ challenge_data }}"
+    retrieve_all_alternates: "{{ retrieve_all_alternates | default(omit) }}"
+    select_chain: "{{ select_chain | default(omit) if select_crypto_backend == 'cryptography' else omit }}"
+  register: get_certificate_result
+  when: challenge_data is changed
+
+###############################################################################################

@@ -1,0 +1,101 @@
+---
+
+- name: Install unbound and dnsdist on institutional caching name servers
+  gather_facts: true
+  hosts: obsd_doas
+  become: yes
+  vars:
+    max_clients: 10
+
+  tasks:
+
+    - name: start by loading in some common variables
+      ansible.builtin.include_vars:
+        dir: vars/all
+        extensions:
+          - 'yaml'
+          - 'yml'
+          - 'json'
+      tags: vars
+
+    - name: start by loading in some variables that are OS dependent
+      ansible.builtin.include_vars: "{{ item }}"
+      with_first_found:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yaml"
+        - "{{ ansible_distribution }}.yaml"
+        - default.yaml
+      tags: vars
+
+    - name: make sure unbound is installed for Ubuntu systems
+      apt:
+        name: unbound
+        state: present
+      become_method: "{{ become_method }}"
+      when: ansible_facts['distribution'] == 'Ubuntu'
+      tags: unbound
+
+    - name: Write some files to be included for unbound
+      ansible.builtin.copy:
+        src: "files/unbound/{{ item }}"
+        dest: "{{ unbound_dir }}"
+        owner: root
+        mode: 0644
+      with_items:
+          - access.cidr
+          - arpa.zones
+          - forward.zones
+          - local-zone-data.conf
+          - local-zone-routes.conf
+          - local-zones
+          - named.cache
+          - stub-zones
+          - typo.zones
+      when: inventory_hostname in local_resolvers
+      notify: Restart unbound
+      tags: unbound-data,unbound
+
+    - name: Generate and install the unbound.conf file
+      ansible.builtin.template:
+        src: unbound_conf.jinga
+        dest: "{{ unbound_dir }}/unbound.conf"
+        backup: true
+        owner: root
+        group: wheel
+        mode: 0660
+      when: inventory_hostname in local_resolvers
+      notify: Restart unbound
+      tags: unbound,unbound-data
+
+    - name: Create some directories
+      ansible.builtin.file:
+        path: /var/unbound/var/log
+        state: directory
+        owner: _unbound
+        group: _unbound
+        mode: 0775
+      when: inventory_hostname in local_resolvers
+      tags: unbound
+
+    - name: Write script to rotate log unbound files
+      ansible.builtin.copy:
+        src: files/unbound/unbound-rotate-log
+        dest: "{{ script_dir }}"
+        owner: root
+        mode: 0775
+      when: inventory_hostname in local_resolvers
+      tags: unbound,system
+
+    - name: Add entry to crontab for rotating logs
+      ansible.builtin.cron:
+        name: "rotate unbound logs"
+        minute: "17"
+        job: "/root/scripts/unbound-rotate-log"
+      when: inventory_hostname in local_resolvers
+      tags: unbound,system
+
+  handlers:
+
+    - name: Restart unbound
+      service:
+        name: unbound
+        state: restarted

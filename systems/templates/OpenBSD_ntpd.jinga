@@ -1,0 +1,47 @@
+
+#  File created by ansible/jinga. Do not edit
+#
+# $OpenBSD: ntpd.conf,v 1.16 2019/11/06 19:04:12 deraadt Exp $
+#
+# See ntpd.conf(5) and /etc/examples/ntpd.conf
+
+{% if ansible_hostname in ntpdata %}
+{% set info = ntpdata[ansible_hostname] %}
+# NTP server
+{% if 'listen_addr' in info %}
+listen on {{ info['listen_addr'] }} 
+{% else %}
+listen on *
+{% endif %}
+
+# Stratum 1 servers
+{% for srv in info['stratum1'] %}
+server {{srv}}
+{% endfor %}
+
+{% if info['stratum2'] %}
+# Stratum 2 servers
+{% for srv in info['stratum2'] %}
+server {{srv}}
+{% endfor %}
+{% endif %}
+
+# Random other servers
+{% for srvs in info['servers'] %}
+servers {{ srvs }}
+{% endfor %}
+
+{% else %}
+# NTP client
+
+# listen on *
+
+servers 0.pool.utoronto.ca
+servers 1.pool.utoronto.ca
+servers 2.pool.utoronto.ca
+
+{% endif %}
+
+constraint from "9.9.9.9"              # quad9 v4 without DNS
+constraint from "2620:fe::fe"          # quad9 v6 without DNS
+constraints from "www.google.com"      # intentionally not 8.8.8.8

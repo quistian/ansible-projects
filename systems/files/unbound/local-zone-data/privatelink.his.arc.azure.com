@@ -1,0 +1,7 @@
+local-data: "q031_test.his.arc.azure.com. CNAME q031_test.privatelink.his.arc.azure.com."
+local-data: "q228_test.his.arc.azure.com. CNAME q228_test.privatelink.his.arc.azure.com."
+local-data: "q234_test.his.arc.azure.com. CNAME q234_test.privatelink.his.arc.azure.com."
+local-data: "q277_test.his.arc.azure.com. CNAME q277_test.privatelink.his.arc.azure.com."
+local-data: "q278_test.his.arc.azure.com. CNAME q278_test.privatelink.his.arc.azure.com."
+local-data: "q569_test.his.arc.azure.com. CNAME q569_test.privatelink.his.arc.azure.com."
+local-data: "q574_test.his.arc.azure.com. CNAME q574_test.privatelink.his.arc.azure.com."

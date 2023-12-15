@@ -1,0 +1,7 @@
+local-data: "q031_test.dfs.core.windows.net. CNAME q031_test.privatelink.dfs.core.windows.net."
+local-data: "q228_test.dfs.core.windows.net. CNAME q228_test.privatelink.dfs.core.windows.net."
+local-data: "q234_test.dfs.core.windows.net. CNAME q234_test.privatelink.dfs.core.windows.net."
+local-data: "q277_test.dfs.core.windows.net. CNAME q277_test.privatelink.dfs.core.windows.net."
+local-data: "q278_test.dfs.core.windows.net. CNAME q278_test.privatelink.dfs.core.windows.net."
+local-data: "q569_test.dfs.core.windows.net. CNAME q569_test.privatelink.dfs.core.windows.net."
+local-data: "q574_test.dfs.core.windows.net. CNAME q574_test.privatelink.dfs.core.windows.net."

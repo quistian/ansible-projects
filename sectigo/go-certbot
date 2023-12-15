@@ -1,0 +1,7 @@
+#!/bin/sh
+
+certbot certonly --standalone --non-interactive --agree-tos \  
+  --email russell.sutherland@utoronto.ca --server https://acme.sectigo.com/v2/OV  \
+  --eab-kid 0ICUzWHZHb9VwZQ_h6gc6A \  
+  --eab-hmac-key E4mJ2g3cFV1U2hR3e4Vj_NR-azzJ6CW27bIm7NySeVj9S1uGKARN3VvG44pGZkuhB-THofRe5bVMyQSLCwjiQ \  
+  --domain dns5.utoronto.ca --cert-name dns5-utoronto-ca

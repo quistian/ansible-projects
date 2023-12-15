@@ -1,0 +1,7 @@
+local-data: "q031_test.azuresynapse.net. CNAME q031_test.privatelink.azuresynapse.net."
+local-data: "q228_test.azuresynapse.net. CNAME q228_test.privatelink.azuresynapse.net."
+local-data: "q234_test.azuresynapse.net. CNAME q234_test.privatelink.azuresynapse.net."
+local-data: "q277_test.azuresynapse.net. CNAME q277_test.privatelink.azuresynapse.net."
+local-data: "q278_test.azuresynapse.net. CNAME q278_test.privatelink.azuresynapse.net."
+local-data: "q569_test.azuresynapse.net. CNAME q569_test.privatelink.azuresynapse.net."
+local-data: "q574_test.azuresynapse.net. CNAME q574_test.privatelink.azuresynapse.net."

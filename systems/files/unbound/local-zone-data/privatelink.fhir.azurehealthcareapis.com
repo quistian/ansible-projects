@@ -1,0 +1,7 @@
+local-data: "q031_test.fhir.azurehealthcareapis.com. CNAME q031_test.privatelink.fhir.azurehealthcareapis.com."
+local-data: "q228_test.fhir.azurehealthcareapis.com. CNAME q228_test.privatelink.fhir.azurehealthcareapis.com."
+local-data: "q234_test.fhir.azurehealthcareapis.com. CNAME q234_test.privatelink.fhir.azurehealthcareapis.com."
+local-data: "q277_test.fhir.azurehealthcareapis.com. CNAME q277_test.privatelink.fhir.azurehealthcareapis.com."
+local-data: "q278_test.fhir.azurehealthcareapis.com. CNAME q278_test.privatelink.fhir.azurehealthcareapis.com."
+local-data: "q569_test.fhir.azurehealthcareapis.com. CNAME q569_test.privatelink.fhir.azurehealthcareapis.com."
+local-data: "q574_test.fhir.azurehealthcareapis.com. CNAME q574_test.privatelink.fhir.azurehealthcareapis.com."

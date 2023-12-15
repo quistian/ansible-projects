@@ -1,0 +1,7 @@
+local-data: "q031_test.queue.core.windows.net. CNAME q031_test.privatelink.queue.core.windows.net."
+local-data: "q228_test.queue.core.windows.net. CNAME q228_test.privatelink.queue.core.windows.net."
+local-data: "q234_test.queue.core.windows.net. CNAME q234_test.privatelink.queue.core.windows.net."
+local-data: "q277_test.queue.core.windows.net. CNAME q277_test.privatelink.queue.core.windows.net."
+local-data: "q278_test.queue.core.windows.net. CNAME q278_test.privatelink.queue.core.windows.net."
+local-data: "q569_test.queue.core.windows.net. CNAME q569_test.privatelink.queue.core.windows.net."
+local-data: "q574_test.queue.core.windows.net. CNAME q574_test.privatelink.queue.core.windows.net."

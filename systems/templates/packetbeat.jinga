@@ -1,0 +1,77 @@
+{% set fqdn = ansible_facts['fqdn'] %}
+{% set intf = ansible_facts['default_ipv4']['interface'] %}
+---
+
+name: {{ fqdn }}
+fields_under_root: true
+fields:
+  agent.criticality: '8'
+  agent.environment: PRD
+  agent.name: {{ fqdn }}
+  agent.org: uoft
+  agent.tenant.id: uoft.govcn.pres.vpore.cio.eis.dns
+xpack:
+  enabled: false
+monitoring:
+  enabled: false
+  cluster_uuid: __standalone_cluster__
+queue:
+  mem:
+    events: 4096
+    flush:
+      min_events: 0
+      timeout: 0s
+logging:
+  to_syslog: true
+  to_files: false
+  selectors:
+  - "*"
+  level: info
+output:
+  elasticsearch:
+    enabled: false
+  logstash:
+    enabled: true
+    hosts:
+    - siem-lsc01.ad.utoronto.ca:5044
+    - siem-lsc02.ad.utoronto.ca:5044
+    - siem-lsc03.ad.utoronto.ca:5044
+    - siem-lsc04.ad.utoronto.ca:5044
+    - siem-lsc05.ad.utoronto.ca:5044
+    - siem-lsc06.ad.utoronto.ca:5044
+    - siem-lsc07.ad.utoronto.ca:5044
+    - siem-lsc08.ad.utoronto.ca:5044
+    - siem-lsc09.ad.utoronto.ca:5044
+    - siem-lsc10.ad.utoronto.ca:5044
+    - siem-lsc11.ad.utoronto.ca:5044
+    - siem-lsc12.ad.utoronto.ca:5044
+    - siem-lsc13.ad.utoronto.ca:5044
+    - siem-lsc14.ad.utoronto.ca:5044
+    loadbalance: true
+    worker: 2
+    compression_level: '3'
+    ssl:
+      enabled: true
+      verification_mode: full
+      supported_protocols:
+      - TLSv1.2
+      certificate_authorities:
+      - "/etc/packetbeat/uoft-root-ca.crt"
+      - "/etc/packetbeat/uoft-device-ca.crt"
+      certificate: "/etc/packetbeat/client.pem"
+      key: "/etc/packetbeat/client.key"
+processors: []
+packetbeat:
+  flows:
+    enabled: true
+    timeout: 30s
+    period: 10s
+  protocols:
+    dns:
+      ports:
+      - 53
+  procs: {}
+  interfaces:
+    device: {{ intf }}
+    type: pcap
+    snaplen: 65535

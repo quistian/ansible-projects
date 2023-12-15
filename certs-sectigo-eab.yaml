@@ -1,0 +1,58 @@
+---
+
+- name: Manage certificates for hosts
+  gather_facts: true
+  hosts: obsd_doas
+  become: yes
+  vars:
+    max_clients: 10
+
+  tasks:
+
+  - name: start by loading in some variables
+    ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+    vars:
+      params:
+        files:
+          - '{{ ansible_distribution }}.yml'
+          - default.yaml
+        paths:
+          - 'vars'
+    tags: vars
+
+  - name: Make sure crypto  packages are installed
+    community.general.openbsd_pkg:
+      name:
+        - py3-cryptography--
+      state: latest
+
+  - name: Generate a domain private key
+    community.crypto.openssl_privatekey:
+      path: "/etc/ssl/private/{{ ansible_facts['fqdn'] }}.key"
+
+  - name: Generate a ACME account private key
+    community.crypto.openssl_privatekey:
+      path: "/etc/ssl/private/letsencrypt-account.key"
+
+  - name: Generate a Certificate Signing Request
+    community.crypto.openssl_csr:
+      path: "/etc/ssl/{{ ansible_facts['fqdn'] }}.csr"
+      privatekey_path: "/etc/ssl/private/{{ ansible_facts['fqdn'] }}.key"
+      organization_name: "University of Toronto"
+      email_address: "russell.sutherland@utoronto.ca"
+      country_name: CA
+      common_name: "{{ ansible_facts['fqdn'] }}"
+
+  - name: Generate a Lets Encrypt Certificate
+    community.crypto.acme_account:
+      acme_directory: https://acme.sectigo.com/v2/OV
+      external_account_binding:
+        key: JE4mJ2g3cFV1U2hR3e4Vj_NR-azzJ6CW27bIm7NySeVj9S1uGKARN3VvG44pGZkuhB-THofRe5bVMyQSLCwjiQ
+        kid: 0ICUzWHZHb9VwZQ_h6gc6A
+      path: "/etc/ssl/certs/{{ ansible_facts['fqdn'] }}.crt"
+      csr_path: "/etc/ssl/{{ ansible_facts['fqdn'] }}.csr"
+      provider: acme
+      acme_accountkey_path: "/etc/ssl/private/letsencrypt-account.key"
+      acme_challenge_path: https://acme.sectigo.com/v2/OV
+      ignore_timestamps: false
+    tags: acme

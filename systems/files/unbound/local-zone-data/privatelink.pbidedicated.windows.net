@@ -1,0 +1,7 @@
+local-data: "q031_test.pbidedicated.windows.net. CNAME q031_test.privatelink.pbidedicated.windows.net."
+local-data: "q228_test.pbidedicated.windows.net. CNAME q228_test.privatelink.pbidedicated.windows.net."
+local-data: "q234_test.pbidedicated.windows.net. CNAME q234_test.privatelink.pbidedicated.windows.net."
+local-data: "q277_test.pbidedicated.windows.net. CNAME q277_test.privatelink.pbidedicated.windows.net."
+local-data: "q278_test.pbidedicated.windows.net. CNAME q278_test.privatelink.pbidedicated.windows.net."
+local-data: "q569_test.pbidedicated.windows.net. CNAME q569_test.privatelink.pbidedicated.windows.net."
+local-data: "q574_test.pbidedicated.windows.net. CNAME q574_test.privatelink.pbidedicated.windows.net."
