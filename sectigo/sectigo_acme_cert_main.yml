@@ -6,13 +6,13 @@
     select_crypto_backend: "cryptography"
     root_dir: "/etc/sectigo"
     data_dir: "{{ root_dir }}/{{ inventory_hostname }}"
-    acme_dir_url: https://acme.sectigo.com/v2/OV
-    account_key_name: eis-net-dev
     cert_cn: "{{ ansible_facts['fqdn'] }}"
     contact_email: russell.sutherland@utoronto.ca
-    eab_kid: 0ICUzWHZHb9VwZQ_h6gc6A
-    eab_key: JE4mJ2g3cFV1U2hR3e4Vj_NR-azzJ6CW27bIm7NySeVj9S1uGKARN3VvG44pGZkuhB-THofRe5bVMyQSLCwjiQ
-    eab_alg: HS256
+    acme_dir_url: "{{ lookup('ansible.builtin.env', 'SECTIGO_ACME_URL') }}"
+    account_key_name: "{{ lookup('ansible.builtin.env', 'SECTIGO_ACCT_NAME') }}"
+    eab_kid: "{{ lookup('ansible.builtin.env', 'EAB_KID') }}"
+    eab_key: "{{ lookup('ansible.builtin.env', 'EAB_KEY') }}"
+    eab_alg: "{{ lookup('ansible.builtin.env', 'EAB_ALG') }}"
 
   tasks:
 
@@ -91,5 +91,8 @@
   - name: Store results for get cert
     set_fact:
       cert_result: "{{ get_certificate_result }}"
+    tags: debug
+
 #  - debug: var=cert_result
+#  tags: debug
 

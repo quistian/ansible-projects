@@ -1,3 +1,5 @@
 #!/bin/sh
 
-ansible-playbook sectigo_acme_cert_main.yml -v -K --skip-tags debug -l obsd-test
+#ansible-playbook sectigo_acme_cert_main.yml -vv -l obsd-test
+
+ansible-playbook sectigo_acme_cert_main.yml -vv --skip-tags debug -l obsd-test
