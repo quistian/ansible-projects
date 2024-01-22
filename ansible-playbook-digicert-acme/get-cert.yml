@@ -1,9 +1,7 @@
----
 
-# The file is a set of task included from sectigo_acme_cert_main.yaml
-
+## PRIVATE KEY ################################################################################
 - name: ({{ certgen_title }}) Create cert private key
-  community.crypto.openssl_privatekey:
+  openssl_privatekey:
     path: "{{ data_dir }}/{{ certificate_name }}.key"
     type: "{{ 'RSA' if key_type == 'rsa' else 'ECC' }}"
     size: "{{ rsa_bits if key_type == 'rsa' else omit }}"
@@ -16,9 +14,9 @@
     passphrase: "{{ certificate_passphrase | default(omit) | default(omit, true) }}"
     cipher: "{{ 'auto' if certificate_passphrase | default() else omit }}"
     force: true
-
+## CSR ########################################################################################
 - name: ({{ certgen_title }}) Create cert CSR
-  community.crypto.openssl_csr:
+  openssl_csr:
     path: "{{ data_dir }}/{{ certificate_name }}.csr"
     privatekey_path: "{{ data_dir }}/{{ certificate_name }}.key"
     privatekey_passphrase: "{{ certificate_passphrase | default(omit) | default(omit, true) }}"
@@ -26,14 +24,13 @@
     subject_alt_name_critical: "{{ subject_alt_name_critical }}"
     return_content: true
   register: csr_result
-
 ## ACME STEP 1 ################################################################################
 - name: ({{ certgen_title }}) Get challenges
   acme_certificate:
     select_crypto_backend: "{{ select_crypto_backend }}"
     acme_version: 2
     acme_directory: "{{ acme_dir }}"
-    account_key: "{{ (root_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
+    account_key: "{{ (data_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
     account_key_content: "{{ account_key_content | default(omit) }}"
     account_key_passphrase: "{{ account_key_passphrase | default(omit) | default(omit, true) }}"
     modify_account: "{{ modify_account }}"
@@ -49,7 +46,6 @@
     terms_agreed: "{{ terms_agreed }}"
     account_email: "{{ account_email }}"
   register: challenge_data
-
 - name: ({{ certgen_title }}) Print challenge data
   debug:
     var: challenge_data
@@ -60,7 +56,7 @@
     select_crypto_backend: "{{ select_crypto_backend }}"
     acme_version: 2
     acme_directory: "{{ acme_dir }}"
-    account_key: "{{ (root_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
+    account_key: "{{ (data_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
     account_key_content: "{{ account_key_content | default(omit) }}"
     account_key_passphrase: "{{ account_key_passphrase | default(omit) | default(omit, true) }}"
     modify_account: "{{ modify_account }}"
@@ -80,5 +76,5 @@
     select_chain: "{{ select_chain | default(omit) if select_crypto_backend == 'cryptography' else omit }}"
   register: get_certificate_result
   when: challenge_data is changed
-
 ###############################################################################################
+

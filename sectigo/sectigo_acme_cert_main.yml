@@ -1,6 +1,6 @@
 ---
 
-- hosts: cert_hosts
+- hosts: all
   become: yes
   vars:
     select_crypto_backend: "cryptography"
@@ -21,7 +21,6 @@
       name:
         - py3-cryptography--
       state: latest
-      become_method: "{{ become_method }}"
     when: ansible_facts['distribution'] == 'OpenBSD'
 
   - name: Creates data directory
@@ -33,18 +32,24 @@
     tags: dir
 
   - name: Generate account keys
-    openssl_privatekey:
+    community.crypto.openssl_privatekey:
       path: "{{ root_dir }}/{{ account_key_name }}.pem"
       type: RSA
       size: 2048
 
   - name: Parse account keys (to ease debugging some test failures)
-    openssl_privatekey_info:
+    community.crypto.openssl_privatekey_info:
       path: "{{ root_dir }}/{{ account_key_name }}.pem"
       return_private_key_data: true
+    register: acct_priv_key
+
+  - name: Dump acct priv key
+    ansible.builtin.debug:
+      var: acct_priv_key
+    tags: debug
 
   - name: Create account with External Account Binding
-    acme_account:
+    community.crypto.acme_account:
       select_crypto_backend: "{{ select_crypto_backend }}"
       account_key_src: "{{ root_dir }}/{{ account_key_name }}.pem"
       acme_version: 2
@@ -58,17 +63,21 @@
         alg: "{{ eab_alg }}"
         key: "{{ eab_key }}"
     register: account_created_eab
-  - debug: var=account_created_eab
+
+  - name: Dump EAB Acount Info
+    ansible.builtin.debug:
+      var: account_created_eab
+    tags: debug
   
   - name: Get certificate from Sectigo CA
-    include_tasks: get-cert.yml
+    ansible.builtin.include_tasks: get-cert.yml
     vars:
       certgen_title: "{{ cert_cn }} Certificate"
       acme_dir: "{{ acme_dir_url }}"
       certificate_name: "{{ cert_cn }}"
       key_type: rsa
       rsa_bits: 2048
-      subject_alt_name: "DNS:www.{{ cert_cn }},DNS:{{ cert_cn }}"
+      subject_alt_name: "DNS:{{ cert_cn }}"
       subject_alt_name_critical: no
       account_key: "{{ account_key_name }}"
       challenge: http-01

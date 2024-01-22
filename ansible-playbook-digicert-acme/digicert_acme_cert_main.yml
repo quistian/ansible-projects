@@ -1,0 +1,76 @@
+- hosts: localhost
+  become: yes
+  vars:
+    select_crypto_backend: "cryptography"
+    data_dir: "data"
+    acme_dir_url: https://acme.digicert.com/v2/acme/directory/
+    account_key_name: accountkey
+    cert_cn: testansible.example.com
+    contact_email: user@example.com
+    eab_kid: eab_kid
+    eab_key: eab_hmac_key
+    eab_alg: HS256
+
+  tasks:
+  - name: Creates data directory
+    file:
+      path: "{{ data_dir }}"
+      state: directory
+
+  - name: Generate account keys
+    openssl_privatekey:
+      path: "{{ data_dir }}/{{ account_key_name }}.pem"
+      passphrase: "{{ account_key_pass | default(omit) | default(omit, true) }}"
+      cipher: "{{ 'auto' if (account_key_pass | default(false)) else omit }}"
+      type: RSA
+      size: 2048
+      force: false
+
+  - name: Parse account keys (to ease debugging some test failures)
+    openssl_privatekey_info:
+      path: "{{ data_dir }}/{{ account_key_name }}.pem"
+      passphrase: "{{ account_key_pass | default(omit) | default(omit, true) }}"
+      return_private_key_data: true
+
+  - name: Create account with External Account Binding
+    acme_account:
+      select_crypto_backend: "{{ select_crypto_backend }}"
+      account_key_src: "{{ data_dir }}/{{ account_key_name }}.pem"
+      acme_version: 2
+      acme_directory: "{{ acme_dir_url }}"
+      validate_certs: yes
+      state: present
+      allow_creation: yes
+      terms_agreed: yes
+      contact:
+        - mailto:"{{ contact_email }}"
+      external_account_binding:
+        kid: "{{ eab_kid }}"
+        alg: "{{ eab_alg }}"
+        key: "{{ eab_key }}"
+    register: account_created_eab
+  - debug: var=account_created_eab
+  
+  - name: Get certificate from digicert amce CA
+    include_tasks: get-cert.yml
+    vars:
+      certgen_title: "{{ cert_cn }} Certificate"
+      acme_dir: "{{ acme_dir_url }}"
+      certificate_name: "{{ cert_cn }}"
+      key_type: rsa
+      rsa_bits: 2048
+      subject_alt_name: "DNS:www.{{ cert_cn }},DNS:{{ cert_cn }}"
+      subject_alt_name_critical: no
+      account_key: accountkey
+      challenge: http-01
+      modify_account: no
+      force: yes
+      remaining_days: 10
+      terms_agreed: yes
+      account_email: "{{ contact_email }}"
+      use_csr_content: false
+  - name: Store results for get cert
+    set_fact:
+      cert_result: "{{ get_certificate_result }}"
+#  - debug: var=cert_result
+

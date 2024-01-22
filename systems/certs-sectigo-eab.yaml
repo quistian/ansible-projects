@@ -9,12 +9,13 @@
 
   tasks:
 
-  - name: start by loading in some variables
+  - name: Load a variable file based on the OS type, or a default if not found. Using free-form to specify the file
     ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
     vars:
       params:
         files:
           - '{{ ansible_distribution }}.yml'
+          - '{{ ansible_os_family }}.yml'
           - default.yaml
         paths:
           - 'vars'
