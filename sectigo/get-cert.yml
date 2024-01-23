@@ -27,9 +27,15 @@
     return_content: true
   register: csr_result
 
-## ACME STEP 1 ################################################################################
+- name: ({{ certgen_title }}) Print CSR data
+  ansible.builtin.debug:
+    var: csr_result
+    verbosity: 2
+  tags: debug
+
+# ACME STEP 1
 - name: ({{ certgen_title }}) Get challenges
-  acme_certificate:
+  community.crypto.acme_certificate:
     select_crypto_backend: "{{ select_crypto_backend }}"
     acme_version: 2
     acme_directory: "{{ acme_dir }}"
@@ -51,12 +57,14 @@
   register: challenge_data
 
 - name: ({{ certgen_title }}) Print challenge data
-  debug:
+  ansible.builtin.debug:
     var: challenge_data
+    verbosity: 2
+  tags: debug
 
-## ACME STEP 2 ################################################################################
+# ACME STEP 2
 - name: ({{ certgen_title }}) Get certificates
-  acme_certificate:
+  community.crypto.acme_certificate:
     select_crypto_backend: "{{ select_crypto_backend }}"
     acme_version: 2
     acme_directory: "{{ acme_dir }}"
@@ -81,4 +89,9 @@
   register: get_certificate_result
   when: challenge_data is changed
 
-###############################################################################################
+- name: ({{ certgen_title }}) Print Get certificate result
+  ansible.builtin.debug:
+    var: get_certificate_result
+    verbosity: 2
+  when: challenge_data is changed
+  tags: debug

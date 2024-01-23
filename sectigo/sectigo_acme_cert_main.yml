@@ -82,7 +82,7 @@
       account_key: "{{ account_key_name }}"
       challenge: http-01
       modify_account: no
-      force: yes
+      force: no
       remaining_days: 10
       terms_agreed: yes
       account_email: "{{ contact_email }}"
