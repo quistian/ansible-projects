@@ -1,0 +1,14 @@
+---
+
+- name: test out some operations
+  hosts: doghaus
+  vars:
+    eab_var: "none"
+    eab_alg: "{{ lookup('ansible.builtin.env', 'EAB_ALG') }}"
+    local_home: "{{ lookup('ansible.builtin.env', 'HOME') }}"
+
+  tasks:
+
+  - name: Basis operations
+    ansible.builtin.debug:
+      msg: "{{ lookup('ansible.builtin.env', 'HOME') }} is the local home dir as is {{ local_home }} and local eab_alg is {{ eab_alg }}"
