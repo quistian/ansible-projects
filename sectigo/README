@@ -1,37 +1,43 @@
-EIS NetDev Sectigo Documentation
+# EIS NetDev Sectigo Documentation
 
-URLs of interest:
+## URLs of interest:
 
-UofT Information Security:
+### UofT Information Security:
 
 https://isea.utoronto.ca/services/pki-certificates/acme-implementation/
 
-To create a new Sectigo account:
+- To create a new Sectigo account:
 
+```
 curl 'https://cert-manager.com/api/acme/v2/account' -i -X POST \
   -H 'Content-Type: application/json' \
   -H 'login: account' \
   -H 'password: password!' \
   -H 'customerUri: uot' \
   -d '{"acmeServer":"https://acme.sectigo.com/v2/OV","name":"apitest","organizationId":6339}'
+```
 
-To find the Account ID of the new ACME account:
+- To find the Account ID of the new ACME account:
 
+```
 curl 'https://cert-manager.com/api/acme/v2/account?position=0&size=10&organizationId=6339&name=apitest&acmeServer=https://acme.sectigo.com/v2/OV&status=Pending' -i -X GET \
   -H 'login: account' \
   -H 'password: password' \
   -H 'customerUri: uoft'
+```
 
-To add new domains to the created ACME Sectigo account:
+- To add new domains to the created ACME Sectigo account:
 
+```
 curl 'https://cert-manager.com/api/acme/v2/account/24282/domain' -i -X POST \
   -H 'Content-Type: application/json' \
   -H 'login: account' \
   -H 'password: password' \
   -H 'customerUri: uot' \
   -d '{"domains":[{"name":"si.utoronto.ca"}]}'
+```
 
-From the Sectigo Certificate Manger web site:
+### From the Sectigo Certificate Manger web site:
 
 https://cert-manager.com/customer/uot?locale=en#acme
 

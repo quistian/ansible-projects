@@ -1,5 +1,7 @@
 Thu Aug 25 11:17:46 EDT 2022
 
+Ansible Information:
+
 OpenBSD implementation:
 
 Current:
@@ -23,7 +25,6 @@ ansible [core 2.13.4]
   python version = 3.9.15 (main, Oct 21 2022, 14:01:40) [Clang 13.0.0 ]
   jinja version = 3.1.2
   libyaml = True
-
 
 Some Ansible defintions:
 
@@ -59,6 +60,11 @@ Modules:
 	modules in a playbook. Starting in Ansible 2.10, modules are grouped
 	in collections. For an idea of how many collections Ansible includes,
 	take a look at the Collection Index.
+  Modules operate on the nodes, the remote hosts
+
+Plugins:
+  Plugins operate on the control node, rather than on the managed nodes.
+  E.g. lookup()
 
 Tasks:
 	The units of action in Ansible. You can execute a single task once with an ad hoc command.
@@ -78,5 +84,17 @@ ansible [core 2.14.3]
   ansible collection location = /home/ansible/.ansible/collections:/usr/share/ansible/collections
   executable location = /usr/local/bin/ansible
   python version = 3.10.11 (main, Apr 13 2023, 01:52:20) [Clang 13.0.0 ] (/usr/local/bin/python3.10)
+  jinja version = 3.1.2
+  libyaml = True
+
+Wed Jan 24 13:50:45 EST 2024
+OpenBSD doghaus.eis.utoronto.ca 7.4 GENERIC.MP#2 amd64
+ansible [core 2.15.4]
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/ansible/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/local/lib/python3.10/site-packages/ansible
+  ansible collection location = /home/ansible/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/local/bin/ansible
+  python version = 3.10.13 (main, Oct  5 2023, 16:21:31) [Clang 13.0.0 ] (/usr/local/bin/python3.10)
   jinja version = 3.1.2
   libyaml = True
