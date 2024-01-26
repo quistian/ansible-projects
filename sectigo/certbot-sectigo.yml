@@ -1,0 +1,189 @@
+---
+
+- hosts: all
+  become: yes
+  vars:
+    select_crypto_backend: "cryptography"
+    root_dir: "/etc/sectigo"
+    data_dir: "{{ root_dir }}/{{ inventory_hostname }}"
+    cert_cn: "{{ ansible_facts['fqdn'] }}"
+    contact_email: russell.sutherland@utoronto.ca
+    acme_dir_url: "{{ lookup('ansible.builtin.env', 'SECTIGO_ACME_URL') }}"
+    account_key_name: "{{ lookup('ansible.builtin.env', 'SECTIGO_ACCT_NAME') }}"
+    eab_kid: "{{ lookup('ansible.builtin.env', 'EAB_KID') }}"
+    eab_key: "{{ lookup('ansible.builtin.env', 'EAB_KEY') }}"
+    eab_alg: "{{ lookup('ansible.builtin.env', 'EAB_ALG') }}"
+    certgen_title: "{{ cert_cn }} Certificate"
+    acme_dir: "{{ acme_dir_url }}"
+    certificate_name: "{{ cert_cn }}"
+    key_type: rsa
+    rsa_bits: 2048
+    subject_alt_name: "DNS:{{ cert_cn }}"
+    subject_alt_name_critical: no
+    account_key: "{{ account_key_name }}"
+    challenge: http-01
+    modify_account: no
+    force: no
+    remaining_days: 10
+    terms_agreed: yes
+    account_email: "{{ contact_email }}"
+    use_csr_content: false
+
+  tasks:
+
+  - name: Make sure crypto packages are installed
+    community.general.openbsd_pkg:
+      name:
+        - py3-cryptography--
+      state: latest
+    when: ansible_facts['distribution'] == 'OpenBSD'
+
+  - name: Creates data directory
+    file:
+      path: "{{data_dir}}"
+#      path: "{{ data_dir }}/{{ inventory_hostname }}"
+      state: directory
+      mode: 0755
+    tags: dir
+
+  - name: Generate account keys
+    community.crypto.openssl_privatekey:
+      path: "{{ root_dir }}/{{ account_key_name }}.pem"
+      type: RSA
+      size: 2048
+
+  - name: Parse account keys (to ease debugging some test failures)
+    community.crypto.openssl_privatekey_info:
+      path: "{{ root_dir }}/{{ account_key_name }}.pem"
+      return_private_key_data: true
+    register: acct_priv_key
+
+  - name: Dump acct priv key
+    ansible.builtin.debug:
+      var: acct_priv_key
+    tags: debug
+
+  - name: Create account with External Account Binding
+    community.crypto.acme_account:
+      select_crypto_backend: "{{ select_crypto_backend }}"
+      account_key_src: "{{ root_dir }}/{{ account_key_name }}.pem"
+      acme_version: 2
+      acme_directory: "{{ acme_dir_url }}"
+      state: present
+      allow_creation: yes
+      terms_agreed: yes
+      contact: "mailto:{{ contact_email }}"
+      external_account_binding:
+        kid: "{{ eab_kid }}"
+        alg: "{{ eab_alg }}"
+        key: "{{ eab_key }}"
+    register: account_created_eab
+
+  - name: Dump EAB Acount Info
+    ansible.builtin.debug:
+      var: account_created_eab
+    tags: debug
+  
+  - name: ({{ certgen_title }}) Create cert private key
+    community.crypto.openssl_privatekey:
+      path: "{{ data_dir }}/{{ certificate_name }}.key"
+      type: "{{ 'RSA' if key_type == 'rsa' else 'ECC' }}"
+      size: "{{ rsa_bits if key_type == 'rsa' else omit }}"
+      curve: >-
+        {{ omit if key_type == 'rsa' else
+           'secp256r1' if key_type == 'ec256' else
+           'secp384r1' if key_type == 'ec384' else
+           'secp521r1' if key_type == 'ec521' else
+           'invalid value for key_type!' }}
+      passphrase: "{{ certificate_passphrase | default(omit) | default(omit, true) }}"
+      cipher: "{{ 'auto' if certificate_passphrase | default() else omit }}"
+      force: true
+
+  - name: ({{ certgen_title }}) Create cert CSR
+    community.crypto.openssl_csr:
+      path: "{{ data_dir }}/{{ certificate_name }}.csr"
+      privatekey_path: "{{ data_dir }}/{{ certificate_name }}.key"
+      privatekey_passphrase: "{{ certificate_passphrase | default(omit) | default(omit, true) }}"
+      subject_alt_name: "{{ subject_alt_name }}"
+      subject_alt_name_critical: "{{ subject_alt_name_critical }}"
+      return_content: true
+    register: csr_result
+
+  - name: ({{ certgen_title }}) Print CSR data
+    ansible.builtin.debug:
+      var: csr_result
+      verbosity: 2
+    tags: debug
+
+# ACME STEP 1
+  - name: ({{ certgen_title }}) Get challenges
+    community.crypto.acme_certificate:
+      select_crypto_backend: "{{ select_crypto_backend }}"
+      acme_version: 2
+      acme_directory: "{{ acme_dir }}"
+      account_key: "{{ (root_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
+      account_key_content: "{{ account_key_content | default(omit) }}"
+      account_key_passphrase: "{{ account_key_passphrase | default(omit) | default(omit, true) }}"
+      modify_account: "{{ modify_account }}"
+      csr: "{{ omit if use_csr_content | default(false) else data_dir ~ '/' ~ certificate_name ~ '.csr' }}"
+      csr_content: "{{ csr_result.csr if use_csr_content | default(false) else omit }}"
+      dest: "{{ data_dir }}/{{ certificate_name }}.pem"
+      fullchain_dest: "{{ data_dir }}/{{ certificate_name }}-fullchain.pem"
+      chain_dest: "{{ data_dir }}/{{ certificate_name }}-chain.pem"
+      challenge: "{{ challenge }}"
+      deactivate_authzs: "{{ deactivate_authzs | default(omit, no) }}"
+      force: "{{ force }}"
+      remaining_days: "{{ remaining_days }}"
+      terms_agreed: "{{ terms_agreed }}"
+      account_email: "{{ account_email }}"
+    register: challenge_data
+
+  - name: ({{ certgen_title }}) Print challenge data
+    ansible.builtin.debug:
+      var: challenge_data
+      verbosity: 2
+    when: challenge_data is changed
+    tags: debug
+
+# ACME STEP 2
+  - name: ({{ certgen_title }}) Get certificates
+    community.crypto.acme_certificate:
+      select_crypto_backend: "{{ select_crypto_backend }}"
+      acme_version: 2
+      acme_directory: "{{ acme_dir }}"
+      account_key: "{{ (root_dir ~ '/' ~ account_key ~ '.pem') if account_key_content is not defined else omit }}"
+      account_key_content: "{{ account_key_content | default(omit) }}"
+      account_key_passphrase: "{{ account_key_passphrase | default(omit) | default(omit, true) }}"
+      modify_account: "{{ modify_account }}"
+      csr: "{{ omit if use_csr_content | default(false) else data_dir ~ '/' ~ certificate_name ~ '.csr' }}"
+      csr_content: "{{ csr_result.csr if use_csr_content | default(false) else omit }}"
+      dest: "{{ data_dir }}/{{ certificate_name }}.pem"
+      fullchain_dest: "{{ data_dir }}/{{ certificate_name }}-fullchain.pem"
+      chain_dest: "{{ data_dir }}/{{ certificate_name }}-chain.pem"
+      challenge: "{{ challenge }}"
+      deactivate_authzs: "{{ deactivate_authzs | default(omit, no) }}"
+      force: "{{ force }}"
+      remaining_days: "{{ remaining_days }}"
+      terms_agreed: "{{ terms_agreed }}"
+      account_email: "{{ account_email }}"
+      data: "{{ challenge_data }}"
+      retrieve_all_alternates: "{{ retrieve_all_alternates | default(omit) }}"
+      select_chain: "{{ select_chain | default(omit) if select_crypto_backend == 'cryptography' else omit }}"
+    register: get_certificate_result
+    when: challenge_data is changed
+
+  - name: ({{ certgen_title }}) Print Get certificate result
+    ansible.builtin.debug:
+      var: get_certificate_result
+      verbosity: 2
+    when: challenge_data is changed
+    tags: debug
+
+  - name: Store results for get cert
+    set_fact:
+      cert_result: "{{ get_certificate_result }}"
+    tags: debug
+
+#  - debug: var=cert_result
+#  tags: debug
+

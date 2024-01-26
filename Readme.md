@@ -98,3 +98,18 @@ ansible [core 2.15.4]
   python version = 3.10.13 (main, Oct  5 2023, 16:21:31) [Clang 13.0.0 ] (/usr/local/bin/python3.10)
   jinja version = 3.1.2
   libyaml = True
+
+Fri Jan 26 09:48:32 EST 2024
+
+Some Ansible Commands:
+
+$ ansible-inventory --version
+ansible-inventory [core 2.15.4]
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/ansible/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/local/lib/python3.10/site-packages/ansible
+  ansible collection location = /home/ansible/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/local/bin/ansible-inventory
+  python version = 3.10.13 (main, Oct  5 2023, 16:21:31) [Clang 13.0.0 ] (/usr/local/bin/python3.10)
+  jinja version = 3.1.2
+  libyaml = True

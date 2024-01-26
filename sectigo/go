@@ -1,6 +1,7 @@
 #!/bin/sh
 
 #ansible-playbook sectigo_acme_cert_main.yml -vv -l obsd-test
+#ansible-playbook sectigo_acme_cert_main.yml -vv --skip-tags debug -l mirror
 
-ansible-playbook sectigo_acme_cert_main.yml -v --skip-tags debug -l obsd-test
-# ansible-playbook sectigo_acme_cert_main.yml -vv --skip-tags debug -l mirror
+#ansible-playbook sectigo_acme_cert_main.yml -v --skip-tags debug -l obsd-test --extra-vars '{ "force": true }'
+ansible-playbook qwe.yml -v --skip-tags debug -l madhaus --extra-vars '{ "force": false }'
