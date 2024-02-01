@@ -4,4 +4,12 @@
 #ansible-playbook sectigo_acme_cert_main.yml -vv --skip-tags debug -l mirror
 
 #ansible-playbook sectigo_acme_cert_main.yml -v --skip-tags debug -l obsd-test --extra-vars '{ "force": true }'
-ansible-playbook qwe.yml -v --skip-tags debug -l madhaus --extra-vars '{ "force": false }'
+
+#  --verbose \
+#  --limit doghaus \
+
+ansible-playbook ~/sectigo/certbot-sectigo.yml \
+  --verbose \
+  --limit netapps \
+  --skip-tags debug \
+  --extra-vars '{ "force": true }'

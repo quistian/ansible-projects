@@ -1,6 +1,6 @@
 ---
 
-- hosts: all
+- hosts: cert_hosts
   become: yes
   vars:
     select_crypto_backend: "cryptography"
@@ -140,10 +140,13 @@
 
   - name: ({{ certgen_title }}) Print challenge data
     ansible.builtin.debug:
-      var: challenge_data
-      verbosity: 2
-    when: challenge_data is changed
+      msg: "{{ inventory_hostname }}:{{ challenge_data.changed }}"
     tags: debug
+ 
+#     var: challenge_data
+#      verbosity: 4
+#    when: challenge_data is changed
+#    tags: debug
 
 # ACME STEP 2
   - name: ({{ certgen_title }}) Get certificates
@@ -170,7 +173,16 @@
       retrieve_all_alternates: "{{ retrieve_all_alternates | default(omit) }}"
       select_chain: "{{ select_chain | default(omit) if select_crypto_backend == 'cryptography' else omit }}"
     register: get_certificate_result
+    notify:
+      - Restart Apache
     when: challenge_data is changed
+
+  - name: Restart Apache if necessary
+    ansible.builtin.debug:
+      msg: Restarting Apache on an Ubuntu system
+    notify:
+      - Restart Apache
+    when: challenge_data is changed and ansible_facts['distribution'] == 'Ubuntu'
 
   - name: ({{ certgen_title }}) Print Get certificate result
     ansible.builtin.debug:
@@ -184,6 +196,11 @@
       cert_result: "{{ get_certificate_result }}"
     tags: debug
 
+  handlers:
+    - name: Restart Apache
+      ansible.builtin.service:
+        name: apache2
+        state: restarted
+
 #  - debug: var=cert_result
 #  tags: debug
-
