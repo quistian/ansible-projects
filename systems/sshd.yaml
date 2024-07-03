@@ -14,6 +14,25 @@
       state: latest
     tags: pkgs
 
+  - name: Add the Duo configuration file
+    ansible.builtin.copy:
+      src: files/duo/login_duo.conf
+      dest: /etc/login_duo.conf
+      owner: sshd
+      group: wheel
+      mode: '0600'
+
+  - name: Add a standard pf.conf file
+    template:
+      src: pf_conf.jinga
+      dest: /etc/pf.conf
+      owner: root
+      group: wheel
+      mode: 0600
+    notify:
+      - reload pf.conf
+    tags: pf
+
   - name: Add the correct config to the end of the sshd_config file
     ansible.builtin.blockinfile:
       path: /etc/ssh/sshd_config
@@ -34,14 +53,55 @@
       name: duo
       state: present
 
-  - name: Add a list of users to the group duo
+  - name: Add a list of users
+    ansible.builtin.user:
+      name: uu7
+      append: yes
+      comment: "piekarz1,Adam Piekarzewski"
+      generate_ssh_key: true
+      groups:
+        - duo
+        - wheel
+      shell: /usr/local/bin/bash
+
+  - name: Add a list of users
+    ansible.builtin.user:
+      name: jchan
+      append: yes
+      comment: "chanjas5,Jason Chan"
+      generate_ssh_key: true
+      groups:
+        - duo
+        - wheel
+      password: "$2b$10$MfzZezn6neX4RucpgydFsu8I1kGHiLj7ogyPnY5ST2IXvRILvWpnm"
+      shell: /usr/local/bin/bash
+
+  - name: Add a list of users
+    ansible.builtin.user:
+      name: deniz
+      append: yes
+      comment: "piekarz1,Adam Piekarzewski"
+      generate_ssh_key: true
+      groups:
+        - duo
+        - wheel
+      shell: /usr/local/bin/bash
+
+  - name: Add a list of users
     ansible.builtin.user:
       name: russ
-      groups: duo
       append: yes
+      comment: "sutherl4,Russell Sutherland"
+      generate_ssh_key: true
+      groups:
+        - duo
+        - wheel
 
   handlers:
     - name: Restart sshd
       ansible.builtin.service:
         name: sshd
         state: restarted
+
+    - name: reload pf.conf
+      command: pfctl -f /etc/pf.conf

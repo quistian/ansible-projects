@@ -16,6 +16,7 @@
           - python3
           - mutt--
           - pwgen
+          - rsync--
           - vim--no_x11-python3
         state: latest
       tags: pkgs

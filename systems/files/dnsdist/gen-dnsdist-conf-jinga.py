@@ -28,6 +28,8 @@ GlobalAcl = 'global.acl'
 AzureAcl = 'on-prem-azure-nets'
 AzurePrivZones = 'azure-priv-zones'
 AzurePubZones = 'azure-pub-zones'
+QACloudZones = 'qa-cloud-utoronto-ca-zones'
+PRODCloudZones = 'prod-cloud-utoronto-ca-zones'
 LocalZones = 'local-zones'
 LocalZones = 'forward.zones'
 ArpaZones = 'arpa.zones'
@@ -180,6 +182,8 @@ def suffix_match_nodes():
 
     azure_priv_f = f"{ReadDnsDistDir}/{AzurePrivZones}"
     azure_pub_f = f"{ReadDnsDistDir}/{AzurePubZones}"
+    azure_prod_cloud_f = f"{ReadDnsDistDir}/{PRODCloudZones}"
+    azure_qa_cloud_f = f"{ReadDnsDistDir}/{QACloudZones}"
 
     print("azure_priv_smn = newSuffixMatchNode()")
     lines = Path(azure_priv_f).read_text().splitlines()
@@ -192,6 +196,18 @@ def suffix_match_nodes():
     for l in lines:
         if l[0] != '#':
             print(f"azure_pub_smn:add('{l}')")
+
+    print("azure_prod_cloud_smn = newSuffixMatchNode()")
+    lines = Path(azure_prod_cloud_f).read_text().splitlines()
+    for l in lines:
+        if l[0] != '#':
+            print(f"azure_prod_cloud_smn:add('{l}')")
+
+    print("azure_qa_cloud_smn = newSuffixMatchNode()")
+    lines = Path(azure_qa_cloud_f).read_text().splitlines()
+    for l in lines:
+        if l[0] != '#':
+            print(f"azure_qa_cloud_smn:add('{l}')")
 
     print()
     local_names = f"{ReadDnsDistDir}/{LocalZones}"
@@ -242,10 +258,14 @@ def selectors():
     print("typo_rule = SuffixMatchNodeRule(typo_smn)")
     print("azure_priv_name_rule = SuffixMatchNodeRule(azure_priv_smn)")
     print("azure_pub_name_rule = SuffixMatchNodeRule(azure_pub_smn)")
+    print("azure_prod_cloud_name_rule = SuffixMatchNodeRule(azure_prod_cloud_smn)")
+    print("azure_qa_cloud_name_rule = SuffixMatchNodeRule(azure_qa_cloud_smn)")
     print("prod_prefix_rule = OrRule({prod_prefix, ams_prefix})")
     print("azure_prefix_rule = OrRule({prod_prefix, qa_prefix})")
-    print("prod_selector = AndRule({azure_net_rule, prod_prefix_rule, azure_priv_name_rule})")
-    print("qa_selector = AndRule({azure_net_rule, qa_prefix, azure_priv_name_rule})")
+    print("prod_suffix_rule = OrRule({azure_priv_name_rule, azure_prod_cloud_name_rule})")
+    print("qa_suffix_rule = OrRule({azure_priv_name_rule, azure_qa_cloud_name_rule})")
+    print("prod_selector = AndRule({azure_net_rule, prod_prefix_rule, prod_suffix_rule})")
+    print("qa_selector = AndRule({azure_net_rule, qa_prefix, qa_suffix_rule})")
     print("no_recurse_selector = AndRule({azure_net_rule, azure_prefix_rule, azure_pub_name_rule})")
 
 def actions():

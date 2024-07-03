@@ -25,6 +25,10 @@ local_resolvers:
   - dns4
   - dns5
 
+wireless_resolvers:
+  - dns8
+  - dns9
+
 remote_resolvers:
   - google
   - cloudflare
@@ -40,6 +44,12 @@ resolvers:
   dns5:
     - 128.100.96.34
     - 128.100.96.36
+  dns8:
+    - 128.100.102.202
+    - 128.100.102.202
+  dns9:
+    - 128.100.102.137
+    - 128.100.102.137
   google:
     - 8.8.8.8
     - 8.8.4.4

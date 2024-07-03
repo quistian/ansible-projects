@@ -1,9 +1,9 @@
 ---
 
-- name: Install unbound and dnsdist on institutional caching name servers
+- name: Install unbound and filebeat and packetbeat on wireless caching name servers
   gather_facts: true
   hosts: obsd_doas
-  become: no
+  become: yes
   vars:
     max_clients: 10
 
@@ -34,12 +34,12 @@
       when: ansible_facts['distribution'] == 'Ubuntu'
       tags: unbound
 
-    - name: Make sure dnsdist, packetbeat and filebeat are installed
-      openbsd_pkg:
-        name: "{{ caching_pkgs }}"
+    - name: Make sure packetbeat and filebeat are installed
+      community.general.openbsd_pkg:
+        name: "{{ beats }}"
         state: latest
-      when: inventory_hostname in local_resolvers
-      tags: pkgs,dnsdist,beats
+      when: inventory_hostname in wireless_resolvers
+      tags: pkgs,beats
 
     - name: Generate and install the filebeat and packetbeat yml configuration files
       ansible.builtin.template:
@@ -49,7 +49,7 @@
         group: wheel
         mode: 0644
       with_items: "{{ beats }}"
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: beats
 
     - name: create some symlinks to certificates above for filebeat and packetbeat
@@ -60,7 +60,7 @@
         group: wheel
         state: link
       with_items: "{{ beats }}"
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: beats
 
     - name: create some symlinks to keys for filebeat and packetbeat
@@ -71,8 +71,8 @@
         group: wheel
         state: link
       with_items: "{{ beats }}"
-      when: inventory_hostname in local_resolvers
-      tags: beats
+      when: inventory_hostname in wireless_resolvers
+      tags: beats,certs
 
     - name: write some files to be included for file and packetbeat
       ansible.builtin.copy:
@@ -83,7 +83,7 @@
       with_items:
         - uoft-root-ca.crt
         - uoft-device-ca.crt
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: certs,beats
 
     - name: create some symlinks to certificates above for filebeat
@@ -96,7 +96,7 @@
       with_items:
       - uoft-root-ca.crt
       - uoft-device-ca.crt
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: beats
 
     - name: create some symlinks to certificates above for packetbeat
@@ -109,7 +109,19 @@
       with_items:
       - uoft-root-ca.crt
       - uoft-device-ca.crt
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
+      tags: beats
+
+    - name: Make sure filebeat and packetbeat are running (and enabled at boot)
+      service:
+        name: "{{ item }}"
+        state: started
+        enabled: yes
+      with_items: "{{ beats }}"
+      when: inventory_hostname in wireless_resolvers
+      notify:
+        - Restart filebeat
+        - Restart packetbeat
       tags: beats
 
     - name: Write some files to be included for unbound
@@ -128,7 +140,7 @@
           - named.cache
           - stub-zones
           - typo.zones
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       notify: Restart unbound
       tags: unbound-data,unbound
 
@@ -140,7 +152,7 @@
         mode: 0644
       with_items:
         - access.cidr
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       notify: Restart dnsdist
       tags: dnsdist,dnsdist-data
 
@@ -152,7 +164,7 @@
         owner: root
         group: wheel
         mode: 0660
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       notify: Restart dnsdist
       tags: dnsdist,dnsdist-data
 
@@ -164,7 +176,7 @@
         owner: root
         group: wheel
         mode: 0660
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       notify: Restart unbound
       tags: unbound,unbound-data
 
@@ -184,7 +196,7 @@
         owner: _unbound
         group: _unbound
         mode: 0775
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: unbound
 
     - name: Write script to rotate log unbound files
@@ -193,7 +205,7 @@
         dest: "{{ script_dir }}"
         owner: root
         mode: 0775
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: unbound,system
 
     - name: Add entry to crontab for rotating logs
@@ -201,17 +213,25 @@
         name: "rotate unbound logs"
         minute: "17"
         job: "/root/scripts/unbound-rotate-log"
-      when: inventory_hostname in local_resolvers
+      when: inventory_hostname in wireless_resolvers
       tags: unbound,system
 
   handlers:
 
-    - name: Restart dnsdist
+    - name: Restart filebeat
       service:
-        name: dnsdist
+        name: filebeat
+        state: restarted
+
+    - name: Restart packetbeat
+      service:
+        name: packetbeat
         state: restarted
 
     - name: Restart unbound
       service:
         name: unbound
         state: restarted
+
+
+...

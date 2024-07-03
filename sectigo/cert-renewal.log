@@ -1,0 +1,19 @@
+# Case when a Certificate is renewed
+TASK [(netapps.eis.utoronto.ca Certificate) Get challenges] *******************************************************************************************************************************************************
+changed: [netapps] => {"account_uri": "https://acme.sectigo.com/v2/OV/account/3ScbShUUAsgy3ojEy1tkow", "authorizations": {"netapps.eis.utoronto.ca": {"challenges": [{"status": "valid", "type": "sectigo-dns-01", "url": "https://acme.sectigo.com/v2/OV/chall/mC8svRJ73pw_TIk36_92ZA", "validated": "2024-01-31T14:39:53Z"}], "expires": "2024-03-01T14:39:53Z", "identifier": {"type": "dns", "value": "netapps.eis.utoronto.ca"}, "status": "valid", "uri": "https://acme.sectigo.com/v2/OV/authz/6u2Bqu02VMRX0P2605Eedw"}}, "cert_days": -1, "challenge_data": {}, "challenge_data_dns": {}, "changed": true, "finalize_uri": "https://acme.sectigo.com/v2/OV/order/pvPEiJV-vpZaVCsTuaHWSw/finalize", "order_uri": "https://acme.sectigo.com/v2/OV/order/pvPEiJV-vpZaVCsTuaHWSw"}
+
+TASK [(netapps.eis.utoronto.ca Certificate) Get certificates] *****************************************************************************************************************************************************
+changed: [netapps] => {"account_uri": "https://acme.sectigo.com/v2/OV/account/3ScbShUUAsgy3ojEy1tkow", "authorizations": {"netapps.eis.utoronto.ca": {"challenges": [{"status": "valid", "type": "sectigo-dns-01", "url": "https://acme.sectigo.com/v2/OV/chall/mC8svRJ73pw_TIk36_92ZA", "validated": "2024-01-31T14:39:53Z"}], "expires": "2024-03-01T14:39:53Z", "identifier": {"type": "dns", "value": "netapps.eis.utoronto.ca"}, "status": "valid", "uri": "https://acme.sectigo.com/v2/OV/authz/6u2Bqu02VMRX0P2605Eedw"}}, "cert_days": 365, "challenge_data": {}, "challenge_data_dns": {}, "changed": true, "finalize_uri": "https://acme.sectigo.com/v2/OV/order/pvPEiJV-vpZaVCsTuaHWSw/finalize", "order_uri": "https://acme.sectigo.com/v2/OV/order/pvPEiJV-vpZaVCsTuaHWSw"}
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+netapps                    : ok=9    changed=7    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0
+
+# Normal case, no renewal
+TASK [(netapps.eis.utoronto.ca Certificate) Get challenges] *******************************************************************************************************************************************************
+ok: [netapps] => {"cert_days": 365, "changed": false}
+
+TASK [(netapps.eis.utoronto.ca Certificate) Get certificates] *****************************************************************************************************************************************************
+skipping: [netapps] => {"changed": false, "false_condition": "challenge_data is changed", "skip_reason": "Conditional result was False"}
+
+PLAY RECAP ********************************************************************************************************************************************************************************************************
+netapps                    : ok=8    changed=2    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0
