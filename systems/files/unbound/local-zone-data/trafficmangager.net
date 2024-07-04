@@ -1,0 +1,3 @@
+# Needed for many resources
+# Added by RPS Mon May  6 12:04:12 EDT 2024
+local-data: "global.handler.control.privatelink.monitor.azure.com. CNAME amcs-prod-global-handler.trafficmanager.net." 

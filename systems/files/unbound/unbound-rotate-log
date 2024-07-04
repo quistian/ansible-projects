@@ -18,3 +18,5 @@ if [ -s unbound -a $SZ -gt $MAX ]; then
 	unbound-control log_reopen
 	gzip $TSTAMP
 fi
+
+find . -type f -name '*.gz' -ctime +30  | xargs rm -f

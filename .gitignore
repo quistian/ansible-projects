@@ -1,5 +1,6 @@
 .Xdefaults
 .ansible/
+.azureexportrc
 .bash_history
 .cache/
 .config/
@@ -18,3 +19,11 @@
 .vimrc
 aruba/
 azure/
+bluecat-gateway-ansible-module/
+systems/files/duo/
+config.out
+inventory
+pwds
+qwe.py
+rest-api.out
+show-run.out

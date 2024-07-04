@@ -1,0 +1,63 @@
+
+PLAY [Install unbound and dnsdist on institutional caching name servers] *******
+
+TASK [Gathering Facts] *********************************************************
+ok: [dns4]
+ok: [dns5]
+ok: [dns1]
+
+TASK [start by loading in some common variables] *******************************
+ok: [dns1]
+ok: [dns4]
+ok: [dns5]
+
+TASK [start by loading in some variables that are OS dependent] ****************
+ok: [dns1] => (item=/home/ansible/systems/vars/OpenBSD.yaml)
+ok: [dns4] => (item=/home/ansible/systems/vars/OpenBSD.yaml)
+ok: [dns5] => (item=/home/ansible/systems/vars/OpenBSD.yaml)
+
+TASK [Write some files to be included for unbound] *****************************
+ok: [dns5] => (item=access.cidr)
+ok: [dns4] => (item=access.cidr)
+ok: [dns1] => (item=access.cidr)
+ok: [dns5] => (item=arpa.zones)
+ok: [dns4] => (item=arpa.zones)
+ok: [dns1] => (item=arpa.zones)
+ok: [dns5] => (item=forward.zones)
+ok: [dns4] => (item=forward.zones)
+ok: [dns1] => (item=forward.zones)
+changed: [dns4] => (item=local-zone-data.conf)
+changed: [dns5] => (item=local-zone-data.conf)
+changed: [dns1] => (item=local-zone-data.conf)
+ok: [dns4] => (item=local-zone-routes.conf)
+ok: [dns5] => (item=local-zone-routes.conf)
+ok: [dns4] => (item=local-zones)
+ok: [dns5] => (item=local-zones)
+ok: [dns1] => (item=local-zone-routes.conf)
+ok: [dns4] => (item=named.cache)
+ok: [dns5] => (item=named.cache)
+ok: [dns1] => (item=local-zones)
+ok: [dns4] => (item=stub-zones)
+ok: [dns5] => (item=stub-zones)
+ok: [dns4] => (item=typo.zones)
+ok: [dns5] => (item=typo.zones)
+ok: [dns1] => (item=named.cache)
+ok: [dns1] => (item=stub-zones)
+ok: [dns1] => (item=typo.zones)
+
+TASK [Generate and install the unbound.conf file] ******************************
+ok: [dns4]
+ok: [dns5]
+ok: [dns1]
+
+RUNNING HANDLER [Restart unbound] **********************************************
+changed: [dns4]
+changed: [dns5]
+changed: [dns1]
+
+PLAY RECAP *********************************************************************
+dns1                       : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+dns4                       : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+dns5                       : ok=6    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+2024-05-16T14-48-45

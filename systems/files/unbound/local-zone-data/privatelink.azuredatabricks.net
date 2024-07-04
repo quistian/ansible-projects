@@ -1,4 +1,3 @@
-local-data: "q031_test.azuredatabricks.net. CNAME q031_test.privatelink.azuredatabricks.net."
 local-data: "q228_test.azuredatabricks.net. CNAME q228_test.privatelink.azuredatabricks.net."
 local-data: "q234_test.azuredatabricks.net. CNAME q234_test.privatelink.azuredatabricks.net."
 local-data: "q277_test.azuredatabricks.net. CNAME q277_test.privatelink.azuredatabricks.net."
