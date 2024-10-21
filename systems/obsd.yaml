@@ -38,9 +38,11 @@
     - name: Perform a System Patch
       community.general.syspatch:
       register: syspatch
+      tags: patch
 
     - name: Reboot if patch requires it
       ansible.builtin.reboot:
       when: syspatch.reboot_needed
+      tags: patch
 
 ...

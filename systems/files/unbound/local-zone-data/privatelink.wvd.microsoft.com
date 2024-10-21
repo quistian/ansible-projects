@@ -1,8 +1,4 @@
 local-data: "n031_test.wvd.microsoft.com. 3600 CNAME n031_test.privatelink.wvd.microsoft.com."
-local-data: "n228_test.wvd.microsoft.com. 3600 CNAME n228_test.privatelink.wvd.microsoft.com."
-local-data: "n234_test.wvd.microsoft.com. 3600 CNAME n234_test.privatelink.wvd.microsoft.com."
-local-data: "n277_test.wvd.microsoft.com. 3600 CNAME n277_test.privatelink.wvd.microsoft.com."
-local-data: "n278_test.wvd.microsoft.com. 3600 CNAME n278_test.privatelink.wvd.microsoft.com."
 local-data: "n301_test.wvd.microsoft.com. 3600 CNAME n301_test.privatelink.wvd.microsoft.com."
 local-data: "n569_test.wvd.microsoft.com. 3600 CNAME n569_test.privatelink.wvd.microsoft.com."
 local-data: "n574_test.wvd.microsoft.com. 3600 CNAME n574_test.privatelink.wvd.microsoft.com."
