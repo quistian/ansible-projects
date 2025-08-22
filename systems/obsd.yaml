@@ -9,16 +9,16 @@
     - name: Make sure base packages are installed
       community.general.openbsd_pkg:
         name:
-          - bacula-client
+          - bacula-client--
           - bash--
-          - curl
-          - login_duo
-          - python3
+          - curl--
+          - login_duo--
+          - python%3.11
           - mutt--
-          - pwgen
+          - pwgen--
           - rsync--
           - vim--no_x11-python3
-        state: latest
+        state: present
       tags: pkgs
 
     - name: Create some system directories

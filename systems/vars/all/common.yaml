@@ -24,6 +24,8 @@ local_resolvers:
   - dns1
   - dns4
   - dns5
+  - obsdtest
+  - obsd
 
 wireless_resolvers:
   - dns8
@@ -50,6 +52,9 @@ resolvers:
   dns9:
     - 128.100.102.137
     - 128.100.102.137
+  obsd_test:
+    - 128.100.102.135
+    - 128.100.102.135
   google:
     - 8.8.8.8
     - 8.8.4.4

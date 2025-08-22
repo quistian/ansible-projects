@@ -1,7 +1,6 @@
-.Xdefaults
+# directories
+# dot dirs
 .ansible/
-.azureexportrc
-.bash_history
 .cache/
 .config/
 .cshrc
@@ -9,20 +8,27 @@
 .ipython/
 .kshrc
 .local/
-.login
-.mailrc
-.profile
-.python_history
 .ssh/
 .vim/
-.viminfo
-.vimrc
+# reg dirs
+Maildir/
 aruba/
 azure/
 bluecat-gateway-ansible-module/
 systems/files/duo/
+# files
+# dot files
+.azureexportrc
+.bash_history
+.Xdefaults
+.login
+.mailrc
+.profile
+.python_history
+.viminfo
+.vimrc
+# regular files
 config.out
-inventory
 pwds
 qwe.py
 rest-api.out

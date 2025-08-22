@@ -4,6 +4,7 @@ dnsdist_testing:
   dns1: false
   dns4: false
   dns5: false
+  obsdtest: true
 
 dnsdist_dir: /etc/dnsdist
 
@@ -11,32 +12,27 @@ dnsdist_data:
   dns1:
     pools:
       default:
-        dns4: 128.100.56.131
         dns5: 128.100.96.36
-        cloudflare: 1.1.1.1
         anycast: 128.100.120.120
       local:
         dns1: 128.100.100.129
-        localhost: 127.0.0.1
+        localhost: 127.0.0.1:5153
 
   dns4:
     pools:
       default:
-        dns1: 128.100.100.129
         dns5: 128.100.96.36
-        cloudflare: 1.0.0.1
         bcit-anycast: 142.1.142.10
       local:
         dns4: 128.100.56.131
-        localhost: 127.0.0.1
+        localhost: 127.0.0.1:5153
 
   dns5:
     pools:
       default:
-        dns1: 128.100.100.129
         dns4: 128.100.56.131
-        cira: 149.112.121.10
-        verisign: 64.6.64.6
+        cira1: 149.112.121.10
+        cira2: 149.112.122.10
       local:
         dns5: 128.100.96.36
-        localhost: 127.0.0.1
+        localhost: 127.0.0.1:5153

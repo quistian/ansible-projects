@@ -4,7 +4,7 @@
 {% if hname == "obsdtest" -%}
 {% set remote_ip = ansible_facts['all_ipv4_addresses'][0] %}
 {% else -%}
-{% set remote_ip = ansible_facts['all_ipv4_addresses'][not dnsdist_testing[hname]] %}
+{% set remote_ip = ansible_facts['all_ipv4_addresses'][1] %}
 {% endif %}
 
 #
