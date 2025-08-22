@@ -1,0 +1,26 @@
+- hosts: dns5
+  gather_facts: true
+  vars:
+    max_clients: 10
+    azure_private_names: "{{ lookup('file', 'files/json_azure_private_names.txt').splitlines() }}"
+
+
+  tasks:
+    - name: start by loading in some common variables
+      ansible.builtin.include_vars:
+        dir: vars/all
+        extensions:
+          - 'yaml'
+          - 'yml'
+          - 'json'
+      tags: vars
+
+    - name: Render unbound_conf template
+      template:
+        src: unbound_conf.j2
+        dest: /tmp/unbound_conf_rendered_template.txt
+
+    - name: Render dnsdist_conf template
+      template:
+        src: dnsdist_conf.j2
+        dest: /tmp/dnsdist_conf_rendered_template.txt

@@ -1,0 +1,36 @@
+---
+
+- name: configure snmp agents for Ubuntu
+  gather_facts: true
+  hosts: ubuntu
+  become: yes
+  become_method: sudo
+  vars:
+    max_clients: 10
+
+  tasks:
+  - name: make sure snmp packages are installed
+    apt:
+      name: snmpd
+      state: present
+
+  - name: write the configuration file
+    template:
+      src: "{{ ansible_facts['distribution'] }}_snmpd.jinga"
+      dest: /etc/snmp/snmpd.conf
+      owner: root
+      mode: '0600'
+    notify:
+    - Restart snmpd
+
+  - name: make sure snmpd is running (and enabled at boot)
+    service:
+      name: snmpd
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: Restart snmpd
+      service:
+        name: snmpd
+        state: restarted

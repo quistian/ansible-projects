@@ -1,0 +1,39 @@
+---
+- name: Install snmpd For newer OpenBSD hosts
+  gather_facts: true
+  hosts: obsd_doas
+  become: yes
+  vars:
+    max_clients: 10
+
+  tasks:
+  - name: load common variables
+    ansible.builtin.include_vars:
+      dir: vars/all
+      extensions:
+        - 'yaml'
+        - 'yml'
+        - 'json'
+    tags: vars
+
+  - name: Write the snmp client configuration file
+    ansible.builtin.template:
+      src: "{{ ansible_facts['distribution'] }}_snmpd.jinga"
+      dest: /etc/snmpd.conf
+      owner: root
+      group: wheel
+      mode: '0600'
+    notify:
+    - Restart snmpd
+
+  - name: Make sure snmpd is running (and enabled at boot)
+    service:
+      name: snmpd
+      state: started
+      enabled: yes
+
+  handlers:
+    - name: Restart snmpd
+      service:
+        name: snmpd
+        state: restarted
