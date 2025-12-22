@@ -1,0 +1,10 @@
+---
+# Ubuntu-specific settings
+ansible_become_method: sudo
+ansible_python_interpreter: /usr/bin/python3
+
+# dnsdist paths for Ubuntu
+dnsdist_config_dir: /etc/dnsdist
+dnsdist_binary: /usr/bin/dnsdist
+dnsdist_group: root
+dnsdist_user: _dnsdist

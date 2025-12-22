@@ -1,0 +1,213 @@
+
+#!/usr/bin/env python3
+"""
+Read FQDNs from a file (one per line), query their NS records,
+extract Azure DNS pool IDs, and emit a pool→zones mapping (YAML)
+plus an optional dnsdist.conf snippet.
+
+Usage:
+  python azure_pool_map.py --input zones.txt --yaml out.yml --dnsdist dnsdist.conf
+"""
+
+import argparse
+import json
+import re
+import sys
+import yaml
+from pathlib import Path
+
+import dns.resolver
+import yaml
+
+
+POOL_REGEX = re.compile(r"^ns\d+-(\d+)\.azure-dns\.", re.IGNORECASE)
+
+DEBUG = False
+DNS_DATA = dict()
+
+def read_fqdns(path: Path) -> list[str]:
+    zones = []
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            z = line.strip()
+            if not z or z.startswith("#"):
+                continue
+            # normalize (no trailing dot needed for dnspython)
+            zones.append(z.rstrip("."))
+    return zones
+
+
+def resolve_ns(zone: str, resolver: dns.resolver.Resolver, timeout: float = 3.0) -> list[str]:
+    try:
+        # dnspython expects type 'NS' and returns rdata objects
+        answers = resolver.resolve(zone, "NS", lifetime=timeout)
+        return [str(r.target).rstrip(".") for r in answers]
+    except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN, dns.resolver.Timeout, dns.exception.DNSException) as e:
+        print(f"[warn] {zone}: NS lookup failed: {e}", file=sys.stderr)
+        return []
+
+def resolve_a(zone: str, resolver: dns.resolver.Resolver, timeout: float = 3.0) -> list[str]:
+    try:
+        answers = resolver.resolve(zone, "A", lifetime=timeout)
+        if DEBUG:
+            for r in answers:
+                print(r.address)
+        return [r.address for r in answers]
+    except (dns.resolver.NoAnswer, dns.resolver.NXDOMAIN, dns.resolver.Timeout, dns.exception.DNSException) as e:
+        print(f"[warn] {zone}: NS lookup failed: {e}", file=sys.stderr)
+        return []
+
+
+def extract_pool_id(ns_names: list[str]) -> str | None:
+    # Azure zones are delegated to a set of four NS names sharing the same numeric suffix
+    for ns in ns_names:
+        m = POOL_REGEX.search(ns)
+        if m:
+            return m.group(1)
+    return None
+
+
+def build_pool_map(zones: list[str], nameserver: str | None = None) -> dict[str, list[str]]:
+    resolver = dns.resolver.Resolver()
+    if nameserver:
+        resolver.nameservers = [nameserver]
+    resolver.timeout = 3.0
+    resolver.lifetime = 3.0
+
+    pool_map: dict[str, list[str]] = {}
+    for zone in zones:
+        ns_names = resolve_ns(zone, resolver)
+        if not ns_names:
+            continue
+        pool_id = ns_names[0].split('-')[1].split('.')[0]
+        tag = f"azure-pool-{pool_id}"
+        if tag not in DNS_DATA:
+            ns_dict = dict()
+            for ns_name in ns_names:
+                ns_ip = resolve_a(ns_name, resolver)[0]
+                ns_dict[ns_name] = ns_ip
+                DNS_DATA[tag] = [ns_dict, [zone]]
+        else:
+            DNS_DATA[tag][1].append(zone)
+
+        pool_id = extract_pool_id(ns_names)
+        if not pool_id:
+            print(f"[warn] {zone}: NS records do not look like Azure DNS pool names: {ns_names}", file=sys.stderr)
+            continue
+
+        pool_name = f"pool-{pool_id}"
+        pool_map.setdefault(pool_name, []).append(zone)
+
+    ns_json_f = 'azure-ns.json'
+    azure_ns_path = Path(ns_json_f)
+    with azure_ns_path.open("w", encoding="utf-8") as f:
+        json.dump(DNS_DATA, f, indent=2)
+    print(f"wrote azure ns json file: {ns_json_f}")
+
+    dnsdist_conf_f = 'dnsdist-azure-pools.conf'
+    fpath = Path(dnsdist_conf_f)
+    with fpath.open("w", encoding="utf-8") as f:
+        f.write('-- Azure Pools\n\n')
+        for pool in DNS_DATA:
+            for ns_server,ns_ip in DNS_DATA[pool][0].items():
+                f.write(f'newServer({{ name="{ns_server}", address="{ns_ip}", pool="{pool}" }})\n')
+            f.write('\n')
+    print(f"wrote azure pools in LUA format: {dnsdist_conf_f}")
+
+    # Create the yaml files for the dnsdist Pools section
+
+    azure_pools = {} # pool -> [ suffixes ]
+    azure_pool_ns = {} # pool -> { ns-name: ip }
+
+    for pool_name, pair in DNS_DATA.items():
+        ns_map, suffixes = pair
+        azure_pools[pool_name] = suffixes
+        azure_pool_ns[pool_name] = ns_map
+
+    home = Path.home()
+    base = home / "systems" / "inventory" / "group_vars" / "dnsdist"
+    pools_file = base / "azure-pools.yml"
+    ns_file    = base / "azure-ns.yml"
+
+    base.mkdir(parents=True, exist_ok=True)
+
+    write_yaml(pools_file, {"azure_pools": azure_pools})
+    write_yaml(ns_file,    {"azure_pool_ns": azure_pool_ns})
+
+    print(f"Wrote:\n  {pools_file}\n  {ns_file}")
+
+    return pool_map
+
+def write_yaml(path: Path, data):
+    with path.open("w", encoding="utf-8") as f:
+        yaml.safe_dump(data, f, sort_keys=True, default_flow_style=False)
+
+
+def make_dnsdist_conf(pool_map: dict[str, list[str]]) -> str:
+    lines = []
+    lines.append("-- Generated by azure_pool_map.py from your zone list\n")
+    lines.append("-- Replace REPLACE_* backends with real IP:port per pool\n")
+
+    # Frontends (adjust to your environment)
+    lines.append("setLocal('0.0.0.0:53')")
+    lines.append("setLocal('[::]:53')\n")
+
+    # Example backends per pool (placeholders)
+    for pool in sorted(pool_map.keys()):
+        lines.append(f"-- {pool} backends (placeholders)")
+        lines.append(f"newServer({{ address = 'REPLACE_{pool}_1:53', pool = '{pool}' }})")
+        lines.append(f"newServer({{ address = 'REPLACE_{pool}_2:53', pool = '{pool}' }})")
+        lines.append(f"setPoolServerPolicy(roundrobin, '{pool}')\n")
+
+    # Default pool (optional placeholder)
+    lines.append("-- Default pool ('') backends (optional)")
+    lines.append("newServer({ address = 'REPLACE_default_1:5300' })\n")
+
+    # Routing rules from suffix to pool
+    lines.append("-- Suffix-based routing rules")
+    for pool, zones in sorted(pool_map.items()):
+        for zone in sorted(zones):
+            lines.append(f"addAction(QNameSuffixRule('{zone}.'), PoolAction('{pool}'))")
+    lines.append("\naddAction(AllRule(), PoolAction(''))\n")
+    lines.append("-- End of generated config\n")
+    return "\n".join(lines)
+
+
+def write_dnsdist(pool_map: dict[str, list[str]], path: Path):
+    conf = make_dnsdist_conf(pool_map)
+    with path.open("w", encoding="utf-8") as f:
+        f.write(conf)
+    print(f"[info] wrote dnsdist.conf → {path}")
+
+
+def main():
+    ap = argparse.ArgumentParser(description="Map Azure zones to DNS pool IDs from a file of FQDNs.")
+    ap.add_argument("--input", required=True, type=Path, help="Path to file containing one FQDN per line")
+    ap.add_argument("--yaml", type=Path, help="Output YAML file (pool→zones mapping)")
+    ap.add_argument("--dnsdist", type=Path, help="Output dnsdist.conf snippet")
+    ap.add_argument("--ns", type=str, help="Use a specific recursive nameserver (IP) for lookups")
+    args = ap.parse_args()
+
+    zones = read_fqdns(args.input)
+    if not zones:
+        print("[error] no zones found in input file", file=sys.stderr)
+        sys.exit(1)
+
+    pool_map = build_pool_map(zones, nameserver=args.ns)
+
+    if not pool_map:
+        print("[warn] no Azure pools discovered from input zones", file=sys.stderr)
+
+    if args.yaml:
+        write_yaml(pool_map, args.yaml)
+
+    if args.dnsdist:
+        write_dnsdist(pool_map, args.dnsdist)
+
+    # If neither outputs specified, print YAML to stdout
+    if not args.yaml and not args.dnsdist:
+        print(yaml.safe_dump({k: sorted(v) for k, v in sorted(pool_map.items())}, sort_keys=True))
+
+
+if __name__ == "__main__":
+    main()

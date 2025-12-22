@@ -1,0 +1,25 @@
+---
+
+# variabes for dns4
+
+ntp:
+  stratum_I:
+    - ntp2.torix.ca
+    - tick.usask.ca
+    - navobs1.gatech.edu
+
+  stratum_II:
+    - chime.utoronto.ca
+    - time.cloudflare.com
+
+dns_dist:
+  pool_local:
+    - dns1-unbound
+    - dns5-unbound
+    - bcit_anycast
+
+  pool_default:
+    - google8888
+    - cloudflare1111
+    - localhost
+    - dns4-unbound

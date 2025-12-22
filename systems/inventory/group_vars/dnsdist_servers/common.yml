@@ -1,0 +1,64 @@
+---
+
+dnsdist_testing:
+  dns1: false
+  dns4: false
+  dns5: false
+  obsd-test: true
+
+dnsdist_dir: /etc/dnsdist
+
+localhost: 127.0.0.1
+local_port: 5353
+public_port: 53
+
+console_key: QfhaEHPbEM+zPBR1tQe6K6pceGorSbqxZLoZtFrcPLw=
+console_acl:
+  - 127.0.0.1/8
+  - 128.100.56.128/27
+  - 128.100.96.32/29
+  - 128.100.102.0/23
+
+web_pw: John1717
+web_key: fichoo2Choh8
+web_acl: 128.100.102.0/23
+
+control_port: 5333
+
+dnsdist_data:
+  dns1:
+    pools:
+      default:
+        dns5: 128.100.96.36
+        anycast: 128.100.120.120
+      local:
+        dns1: 128.100.100.129
+        localhost: 127.0.0.1:5153
+
+  dns4:
+    pools:
+      default:
+        dns5: 128.100.96.36
+        bcit-anycast: 142.1.142.10
+      local:
+        dns4: 128.100.56.131
+        localhost: 127.0.0.1:5153
+
+  dns5:
+    pools:
+      default:
+        dns4: 128.100.56.131
+        cira1: 149.112.121.10
+        cira2: 149.112.122.10
+      local:
+        dns5: 128.100.96.36
+
+  obsd-test:
+    pools:
+      default:
+        dns4: 128.100.56.131
+        cira1: 149.112.121.10
+        cira2: 149.112.122.10
+      local:
+        obsd-test: 128.100.102.135
+        localhost: 127.0.0.1:5153

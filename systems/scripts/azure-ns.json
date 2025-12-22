@@ -1,0 +1,241 @@
+{
+  "azure-pool-07": [
+    {
+      "ns1-07.azure-dns.com": "13.107.236.7",
+      "ns2-07.azure-dns.net": "150.171.21.7",
+      "ns3-07.azure-dns.org": "204.14.183.7",
+      "ns4-07.azure-dns.info": "208.84.5.7"
+    },
+    [
+      "afs.azure.net",
+      "azuresynapse.net",
+      "openai.azure.com",
+      "postgres.cosmos.azure.com"
+    ]
+  ],
+  "azure-pool-04": [
+    {
+      "ns1-04.azure-dns.com": "13.107.236.4",
+      "ns2-04.azure-dns.net": "150.171.21.4",
+      "ns3-04.azure-dns.org": "204.14.183.4",
+      "ns4-04.azure-dns.info": "208.84.5.4"
+    },
+    [
+      "agentsvc.azure-automation.net",
+      "analysis.windows.net",
+      "azure-devices.net",
+      "dicom.azurehealthcareapis.com",
+      "eventgrid.azure.net",
+      "grafana.azure.com",
+      "servicebus.windows.net",
+      "vaultcore.azure.net"
+    ]
+  ],
+  "azure-pool-02": [
+    {
+      "ns1-02.azure-dns.com": "13.107.236.2",
+      "ns2-02.azure-dns.net": "150.171.21.2",
+      "ns3-02.azure-dns.org": "204.14.183.2",
+      "ns4-02.azure-dns.info": "208.84.5.2"
+    },
+    [
+      "analytics.cosmos.azure.com",
+      "azconfig.io",
+      "pbidedicated.windows.net",
+      "prod.migration.windowsazure.com",
+      "services.ai.azure.com"
+    ]
+  ],
+  "azure-pool-01": [
+    {
+      "ns1-01.azure-dns.com": "13.107.236.1",
+      "ns2-01.azure-dns.net": "150.171.21.1",
+      "ns3-01.azure-dns.org": "204.14.183.1",
+      "ns4-01.azure-dns.info": "208.84.5.1"
+    },
+    [
+      "attest.azure.net",
+      "azure-devices-provisioning.net",
+      "azurecr.io",
+      "monitor.azure.com",
+      "ods.opinsights.azure.com",
+      "purviewstudio.azure.com",
+      "redis.cache.windows.net",
+      "wvd.microsoft.com"
+    ]
+  ],
+  "azure-pool-05": [
+    {
+      "ns1-05.azure-dns.com": "13.107.236.5",
+      "ns2-05.azure-dns.net": "150.171.21.5",
+      "ns3-05.azure-dns.org": "204.14.183.5",
+      "ns4-05.azure-dns.info": "208.84.5.5"
+    },
+    [
+      "azure-api.net",
+      "azureiotcentral.com",
+      "cassandra.cosmos.azure.com",
+      "dev.azuresynapse.net",
+      "gremlin.cosmos.azure.com",
+      "oms.opinsights.azure.com",
+      "purview.azure.com",
+      "search.windows.net"
+    ]
+  ],
+  "azure-pool-39": [
+    {
+      "ns1-39.azure-dns.com": "150.171.10.39",
+      "ns2-39.azure-dns.net": "150.171.16.39",
+      "ns3-39.azure-dns.org": "13.107.222.39",
+      "ns4-39.azure-dns.info": "13.107.206.39"
+    },
+    [
+      "azure.com"
+    ]
+  ],
+  "azure-pool-37": [
+    {
+      "ns1-37.azure-dns.com": "150.171.10.37",
+      "ns2-37.azure-dns.net": "150.171.16.37",
+      "ns3-37.azure-dns.org": "13.107.222.37",
+      "ns4-37.azure-dns.info": "13.107.206.37"
+    },
+    [
+      "azurecontainerapps.io"
+    ]
+  ],
+  "azure-pool-09": [
+    {
+      "ns1-09.azure-dns.com": "13.107.236.9",
+      "ns2-09.azure-dns.net": "150.171.21.9",
+      "ns3-09.azure-dns.org": "204.14.183.9",
+      "ns4-09.azure-dns.info": "208.84.5.9"
+    },
+    [
+      "azuredatabricks.net",
+      "managedhsm.azure.net",
+      "service.signalr.net",
+      "table.cosmos.azure.com"
+    ]
+  ],
+  "azure-pool-06": [
+    {
+      "ns1-06.azure-dns.com": "13.107.236.6",
+      "ns2-06.azure-dns.net": "150.171.21.6",
+      "ns3-06.azure-dns.org": "204.14.183.6",
+      "ns4-06.azure-dns.info": "208.84.5.6"
+    },
+    [
+      "azurehdinsight.net",
+      "documents.azure.com",
+      "mongo.cosmos.azure.com",
+      "sql.azuresynapse.net",
+      "webpubsub.azure.com"
+    ]
+  ],
+  "azure-pool-03": [
+    {
+      "ns1-03.azure-dns.com": "13.107.236.3",
+      "ns2-03.azure-dns.net": "150.171.21.3",
+      "ns3-03.azure-dns.org": "204.14.183.3",
+      "ns4-03.azure-dns.info": "208.84.5.3"
+    },
+    [
+      "azurestaticapps.net",
+      "cognitiveservices.azure.com",
+      "notebooks.azure.net"
+    ]
+  ],
+  "azure-pool-224": [
+    {
+      "ns1-224.azure-dns.com": "13.107.236.224",
+      "ns2-224.azure-dns.net": "150.171.21.224",
+      "ns3-224.azure-dns.org": "204.14.183.224",
+      "ns4-224.azure-dns.info": "208.84.5.224"
+    },
+    [
+      "azurewebsites.net",
+      "dfs.core.windows.net",
+      "mysql.database.azure.com",
+      "postgres.database.azure.com"
+    ]
+  ],
+  "azure-pool-64": [
+    {
+      "ns1-64.azure-dns.com": "150.171.10.64",
+      "ns2-64.azure-dns.net": "150.171.16.64",
+      "ns3-64.azure-dns.org": "13.107.222.64",
+      "ns4-64.azure-dns.info": "13.107.206.64"
+    },
+    [
+      "blob.core.windows.net"
+    ]
+  ],
+  "azure-pool-225": [
+    {
+      "ns1-225.azure-dns.com": "13.107.236.225",
+      "ns2-225.azure-dns.net": "150.171.21.225",
+      "ns3-225.azure-dns.org": "204.14.183.225",
+      "ns4-225.azure-dns.info": "208.84.5.225"
+    },
+    [
+      "database.windows.net",
+      "mariadb.database.azure.com"
+    ]
+  ],
+  "azure-pool-65": [
+    {
+      "ns1-65.azure-dns.com": "150.171.10.65",
+      "ns2-65.azure-dns.net": "150.171.16.65",
+      "ns3-65.azure-dns.org": "13.107.222.65",
+      "ns4-65.azure-dns.info": "13.107.206.65"
+    },
+    [
+      "file.core.windows.net"
+    ]
+  ],
+  "azure-pool-38": [
+    {
+      "ns1-38.azure-dns.com": "150.171.10.38",
+      "ns2-38.azure-dns.net": "150.171.16.38",
+      "ns3-38.azure-dns.org": "13.107.222.38",
+      "ns4-38.azure-dns.info": "13.107.206.38"
+    },
+    [
+      "purview-service.microsoft.com"
+    ]
+  ],
+  "azure-pool-66": [
+    {
+      "ns1-66.azure-dns.com": "150.171.10.66",
+      "ns2-66.azure-dns.net": "150.171.16.66",
+      "ns3-66.azure-dns.org": "13.107.222.66",
+      "ns4-66.azure-dns.info": "13.107.206.66"
+    },
+    [
+      "queue.core.windows.net"
+    ]
+  ],
+  "azure-pool-33": [
+    {
+      "ns1-33.azure-dns.com": "150.171.10.33",
+      "ns2-33.azure-dns.net": "150.171.16.33",
+      "ns3-33.azure-dns.org": "13.107.222.33",
+      "ns4-33.azure-dns.info": "13.107.206.33"
+    },
+    [
+      "scm.azurewebsites.net"
+    ]
+  ],
+  "azure-pool-67": [
+    {
+      "ns1-67.azure-dns.com": "150.171.10.67",
+      "ns2-67.azure-dns.net": "150.171.16.67",
+      "ns3-67.azure-dns.org": "13.107.222.67",
+      "ns4-67.azure-dns.info": "13.107.206.67"
+    },
+    [
+      "table.core.windows.net"
+    ]
+  ]
+}

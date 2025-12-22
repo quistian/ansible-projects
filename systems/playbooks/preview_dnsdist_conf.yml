@@ -1,0 +1,13 @@
+---
+- name: Preview dnsdist configuration
+  hosts: dnsdist_servers
+  gather_facts: true
+  
+  vars:
+    azure_public_names: "{{ lookup('file', '../files/public_dns_forwarders.txt').splitlines() | reject('equalto', '') | list }}"
+
+  tasks:
+    - name: Generate and fetch previews
+      ansible.builtin.include_role:
+        name: dnsdist               # ← Ansible finds this via roles_path
+        tasks_from: preview

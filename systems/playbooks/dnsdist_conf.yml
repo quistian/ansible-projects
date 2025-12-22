@@ -1,0 +1,29 @@
+---
+- name: Install dnsdist on institutional caching name servers
+  hosts: dnsdist_servers
+  gather_facts: true
+  become: true
+  
+  vars:
+    max_clients: 10
+    azure_public_names: "{{ lookup('file', '../files/public_dns_forwarders.txt').splitlines() | reject('equalto', '') | list }}"
+
+  tasks:
+    - name: Debug - Show Azure private zones count
+      ansible.builtin.debug:
+        msg: "Loaded {{ azure_private_zones | length }} private DNS zones"
+      tags: debug
+
+    - name: Debug - Show Azure public zones count
+      ansible.builtin.debug:
+        msg: "Loaded {{ azure_public_zones | length }} public DNS zones"
+      tags: debug
+
+    - name: Debug - Show first 5 private zones
+      ansible.builtin.debug:
+        var: azure_private_zones[0:5]
+      tags: debug
+
+  roles:
+    - role: dnsdist
+

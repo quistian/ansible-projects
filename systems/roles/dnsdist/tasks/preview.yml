@@ -1,0 +1,16 @@
+---
+- name: Generate config previews
+  ansible.builtin.template:
+    src: "{{ item }}"              # ← Just filename, Ansible finds it automatically
+    dest: "/tmp/preview-{{ item | regex_replace('\\.j2$', '') }}"
+    mode: '0644'
+  loop:
+    - dnsdist_conf.j2
+
+- name: Fetch previews locally
+  ansible.builtin.fetch:
+    src: "/tmp/preview-{{ item }}"
+    dest: "/home/ansible/systems/previews/{{ inventory_hostname }}/{{ item }}"
+    flat: true
+  loop:
+    - dnsdist_conf

@@ -1,0 +1,192 @@
+---
+
+#
+# general vars for all distributions
+#
+
+anycast: 128.100.120.120
+become_method: sudo
+dnscache_service: unbound
+domain: utoronto.ca
+localhost: 127.0.0.1
+ntpd_dest_file: /etc/openntpd/ntpd.conf
+ntpd_service: openntpd 
+script_dir: /root/scripts
+snmpd_dest_file: /etc/snmp/snmpd.conf
+test_file: /tmp/test.file
+
+caching_pkgs:
+  - dnsdist
+  - filebeat
+  - packetbeat
+
+beats:
+  - filebeat
+  - packetbeat
+
+local_resolvers:
+  - dns1
+  - dns4
+  - dns5
+  - obsd-test
+  - obsd
+
+wireless_resolvers:
+  - dns8
+  - dns9
+
+remote_resolvers:
+  - google
+  - cloudflare
+  - verisign
+
+resolvers:
+  dns1:
+    - 128.100.100.128
+    - 128.100.100.129
+  dns4:
+    - 128.100.56.135
+    - 128.100.56.131
+  dns5:
+    - 128.100.96.34
+    - 128.100.96.36
+  dns8:
+    - 128.100.102.202
+    - 128.100.102.202
+  dns9:
+    - 128.100.102.137
+    - 128.100.102.137
+  obsd-test:
+    - 128.100.102.135
+    - 128.100.102.135
+  google:
+    - 8.8.8.8
+    - 8.8.4.4
+  cloudflare:
+    - 1.1.1.1
+    - 1.0.0.1
+  verisign:
+    - 64.6.64.6
+    - 64.6.65.6
+  commodo:
+    - 8.26.56.26
+    - 8.20.247.20
+
+ntp_servers:
+  - 0.pool.utoronto.ca
+  - 1.pool.utoronto.ca
+  - 2.pool.utoronto.ca
+
+uoft_nets:
+  - 127.0.0.0/8
+  - 10.0.0.0/8
+  - 100.64.0.0/10
+  - 128.100.0.0/16
+  - 135.51.0.0/16
+  - 142.1.0.0/16
+  - 142.150.0.0/15
+  - 192.75.254.0/24
+  - 192.82.128.0/23
+  - 192.168.0.0/16
+  - 192.12.177.64/28
+  - 198.96.61.0/24
+
+allowed_uoft_nets:
+  - 128.100.97.0/24
+  - 128.100.102.0/23
+  - 128.100.235.100
+  - 100.64.0.0/13
+  - 100.112.0.0/14
+  - 100.96.0.0/12
+
+uoft_onprem_nets:
+  - 127.0.0.0/8
+  - 128.100.56.128/27
+  - 128.100.102.0/23
+  - 128.100.67.64/29
+  - 142.150.0.5/24
+  - 10.11.12.13/32
+  - 10.192.155.51/32
+  - 10.50.0.0/16
+
+uoft_forward_zones:
+  - toronto.edu
+  - univoftoronto.ca
+  - uoftoronto.ca
+  - uot.ca
+  - utm.ca
+  - utoronto.ca
+  - utoronto.com
+  - utsc.ca
+
+uoft_reverse_zones:
+  - 10.in-addr.arpa
+  - 0.10.in-addr.arpa
+  - 0.32.10.in-addr.arpa
+  - 100.128.in-addr.arpa
+  - 11.10.in-addr.arpa
+  - 111.168.192.in-addr.arpa
+  - 72.100.in-addr.arpa
+  - 73.100.in-addr.arpa
+  - 74.100.in-addr.arpa
+  - 75.100.in-addr.arpa
+  - 76.100.in-addr.arpa
+  - 1.142.in-addr.arpa
+  - 12.10.in-addr.arpa
+  - 129.211.205.in-addr.arpa
+  - 131.82.192.in-addr.arpa
+  - 1.32.10.in-addr.arpa
+  - 150.142.in-addr.arpa
+  - 151.142.in-addr.arpa
+  - 16.10.in-addr.arpa
+  - 17.10.in-addr.arpa
+  - 175.12.192.in-addr.arpa
+  - 176.12.192.in-addr.arpa
+  - 177.12.192.in-addr.arpa
+  - 177.75.192.in-addr.arpa
+  - 178.12.192.in-addr.arpa
+  - 179.12.192.in-addr.arpa
+  - 180.12.192.in-addr.arpa
+  - 181.12.192.in-addr.arpa
+  - 182.12.192.in-addr.arpa
+  - 183.12.192.in-addr.arpa
+  - 19.10.in-addr.arpa
+  - 192.10.in-addr.arpa
+  - 207.139.192.in-addr.arpa
+  - 214.168.192.in-addr.arpa
+  - 2.168.192.in-addr.arpa
+  - 253.142.in-addr.arpa
+  - 254.75.192.in-addr.arpa
+  - 3.10.in-addr.arpa
+  - 31.212.199.in-addr.arpa
+  - 3.168.192.in-addr.arpa
+  - 4.10.in-addr.arpa
+  - 5.10.in-addr.arpa
+  - 51.138.in-addr.arpa
+  - 6.10.in-addr.arpa
+  - 64.100.in-addr.arpa
+  - 65.100.in-addr.arpa
+  - 66.100.in-addr.arpa
+  - 7.10.in-addr.arpa
+  - 73.139.192.in-addr.arpa
+  - 8.10.in-addr.arpa
+  - 9.10.in-addr.arpa
+  - 96.100.in-addr.arpa
+  - 96.168.192.in-addr.arpa
+
+uoft_typo_zones:
+  - itoronto.ca
+  - jtoronto.ca
+  - uoronto.ca
+  - urtoronto.ca
+  - utornoto.ca
+  - utornto.ca
+  - utorono.ca
+  - utoronot.ca
+  - utoront.ca
+  - utorotno.ca
+  - utoroto.ca
+  - utotonto.ca
+  - utronto.ca
+  - wwwutoronto.ca
+  - ytoronto.ca

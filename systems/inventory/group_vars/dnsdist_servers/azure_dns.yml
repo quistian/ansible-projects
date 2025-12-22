@@ -1,0 +1,7 @@
+---
+# Azure DNS configuration
+azure_private_dns_resolver: "168.63.129.16"
+
+# File paths - will be loaded by playbook
+azure_private_zones_file: "../files/private_dns_zones.txt"
+azure_public_zones_file: "../files/public_dns_forwarders.txt"

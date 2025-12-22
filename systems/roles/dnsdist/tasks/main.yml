@@ -1,0 +1,45 @@
+---
+- name: Install dnsdist
+  ansible.builtin.package:
+    name: dnsdist
+    state: present
+  tags: dnsdist
+
+- name: Ensure dnsdist config directory exists
+  ansible.builtin.file:
+    path: "{{ dnsdist_config_dir }}"
+    state: directory
+    owner: root
+    group: "{{ dnsdist_group }}"
+    mode: '0755'
+  tags: dnsdist
+
+- name: Copy access control file
+  ansible.builtin.copy:
+    src: access.cidr
+    dest: "{{ dnsdist_config_dir }}/access.cidr"
+    owner: root
+    group: "{{ dnsdist_group }}"
+    mode: '0644'
+    backup: true
+  notify: restart dnsdist
+  tags: dnsdist
+
+- name: Deploy dnsdist main configuration
+  ansible.builtin.template:
+    src: dnsdist_conf.j2
+    dest: "{{ dnsdist_config_dir }}/dnsdist.conf"
+    owner: root
+    group: "{{ dnsdist_group }}"
+    mode: '0644'
+    backup: true
+    validate: "{{ dnsdist_binary }} --check-config --config %s"
+  notify: restart dnsdist
+  tags: dnsdist
+
+- name: Ensure dnsdist service is enabled and started
+  ansible.builtin.service:
+    name: dnsdist
+    enabled: true
+    state: started
+  tags: dnsdist

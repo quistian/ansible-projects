@@ -1,0 +1,10 @@
+---
+# OpenBSD-specific settings
+ansible_become_method: doas
+ansible_python_interpreter: /usr/local/bin/python3
+
+# dnsdist paths for OpenBSD
+dnsdist_config_dir: /etc/dnsdist
+dnsdist_binary: /usr/local/bin/dnsdist
+dnsdist_group: wheel
+dnsdist_user: _dnsdist

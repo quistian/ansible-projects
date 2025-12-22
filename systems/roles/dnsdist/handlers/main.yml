@@ -1,0 +1,22 @@
+---
+- name: restart dnsdist
+  ansible.builtin.service:
+    name: dnsdist
+    state: restarted
+
+- name: reload dnsdist
+  ansible.builtin.service:
+    name: dnsdist
+    state: reloaded
+
+- name: check dnsdist config
+  ansible.builtin.command:
+    cmd: dnsdist --check-config --config /etc/dnsdist/dnsdist.conf
+  changed_when: false
+  failed_when: false
+
+- name: restart and enable dnsdist
+  ansible.builtin.service:
+    name: dnsdist
+    state: restarted
+    enabled: true

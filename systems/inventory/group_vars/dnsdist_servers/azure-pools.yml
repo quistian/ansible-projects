@@ -1,0 +1,78 @@
+azure_pools:
+  azure-pool-01:
+  - attest.azure.net
+  - azure-devices-provisioning.net
+  - azurecr.io
+  - monitor.azure.com
+  - ods.opinsights.azure.com
+  - purviewstudio.azure.com
+  - redis.cache.windows.net
+  - wvd.microsoft.com
+  azure-pool-02:
+  - analytics.cosmos.azure.com
+  - azconfig.io
+  - pbidedicated.windows.net
+  - prod.migration.windowsazure.com
+  - services.ai.azure.com
+  azure-pool-03:
+  - azurestaticapps.net
+  - cognitiveservices.azure.com
+  - notebooks.azure.net
+  azure-pool-04:
+  - agentsvc.azure-automation.net
+  - analysis.windows.net
+  - azure-devices.net
+  - dicom.azurehealthcareapis.com
+  - eventgrid.azure.net
+  - grafana.azure.com
+  - servicebus.windows.net
+  - vaultcore.azure.net
+  azure-pool-05:
+  - azure-api.net
+  - azureiotcentral.com
+  - cassandra.cosmos.azure.com
+  - dev.azuresynapse.net
+  - gremlin.cosmos.azure.com
+  - oms.opinsights.azure.com
+  - purview.azure.com
+  - search.windows.net
+  azure-pool-06:
+  - azurehdinsight.net
+  - documents.azure.com
+  - mongo.cosmos.azure.com
+  - sql.azuresynapse.net
+  - webpubsub.azure.com
+  azure-pool-07:
+  - afs.azure.net
+  - azuresynapse.net
+  - openai.azure.com
+  - postgres.cosmos.azure.com
+  azure-pool-09:
+  - azuredatabricks.net
+  - managedhsm.azure.net
+  - service.signalr.net
+  - table.cosmos.azure.com
+  azure-pool-224:
+  - azurewebsites.net
+  - dfs.core.windows.net
+  - mysql.database.azure.com
+  - postgres.database.azure.com
+  azure-pool-225:
+  - database.windows.net
+  - mariadb.database.azure.com
+  azure-pool-33:
+  - scm.azurewebsites.net
+  azure-pool-37:
+  - azurecontainerapps.io
+  azure-pool-38:
+  - purview-service.microsoft.com
+  azure-pool-39:
+  - azure.com
+  azure-pool-64:
+  - blob.core.windows.net
+  azure-pool-65:
+  - file.core.windows.net
+  azure-pool-66:
+  - queue.core.windows.net
+  azure-pool-67:
+  - table.core.windows.net
